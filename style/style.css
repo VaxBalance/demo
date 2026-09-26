@@ -6,51 +6,80 @@
     box-sizing: border-box;
 }
 
-html {
-    width: 100%;
-    overflow-x: hidden;
-}
 
 body {
+
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     font-size: 14px;
+
     background: #eeeeee;
+
     color: #222222;
-    width: 100%;
-    overflow-x: hidden;
+
 }
+
 
 .hidden {
+
     display: none !important;
+
 }
+
 
 button {
+
     padding: 7px 12px;
+
     border: 1px solid #777777;
+
     background: #dddddd;
+
     color: #111111;
+
     cursor: pointer;
+
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
+
 button:hover {
+
     background: #cccccc;
+
 }
+
 
 input,
 select {
+
     padding: 7px;
+
     border: 1px solid #888888;
+
     background: white;
+
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
+
 label {
+
     display: block;
+
     margin-top: 10px;
+
     margin-bottom: 4px;
+
 }
+
 
 
 /* =====================================================
@@ -58,51 +87,75 @@ label {
 ===================================================== */
 
 .login-page {
+
     width: 100%;
+
     min-height: 100vh;
-    min-height: 100dvh;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #eeeeee;
 
-    padding: 15px;
 }
 
+
 .login-box {
+
     width: 380px;
-    max-width: 100%;
 
     background: white;
+
     border: 1px solid #888888;
 
     padding: 25px;
+
 }
+
 
 .login-box h1 {
+
     margin-top: 0;
+
     margin-bottom: 5px;
+
 }
+
 
 .login-box p {
+
     color: #555555;
+
 }
+
 
 .login-box input {
+
     width: 100%;
+
 }
+
 
 .login-box button {
+
     margin-top: 15px;
+
     width: 100%;
+
 }
 
+
 .login-note {
+
     text-align: center;
+
     font-size: 12px;
+
 }
+
 
 
 /* =====================================================
@@ -110,38 +163,48 @@ label {
 ===================================================== */
 
 .top-bar {
-    min-height: 55px;
+
+    height: 55px;
 
     background: #333333;
+
     color: white;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 8px 20px;
+    padding: 0 20px;
 
-    gap: 10px;
 }
 
-.system-title {
-    min-width: 0;
-}
 
 .system-title strong {
+
     font-size: 18px;
+
 }
+
 
 .system-title span {
+
     margin-left: 15px;
+
     font-size: 13px;
+
 }
 
+
 .logout-button {
+
     background: #eeeeee;
+
     color: #222222;
-    flex-shrink: 0;
+
 }
+
 
 
 /* =====================================================
@@ -149,13 +212,14 @@ label {
 ===================================================== */
 
 .main-container {
+
     display: flex;
 
-    min-height: calc(100vh - 55px);
-    min-height: calc(100dvh - 55px);
+    min-height:
+        calc(100vh - 55px);
 
-    width: 100%;
 }
+
 
 
 /* =====================================================
@@ -163,17 +227,21 @@ label {
 ===================================================== */
 
 .sidebar {
+
     width: 210px;
-    flex-shrink: 0;
 
     background: #dddddd;
 
-    border-right: 1px solid #999999;
+    border-right:
+        1px solid #999999;
 
     padding: 10px;
+
 }
 
+
 .sidebar button {
+
     width: 100%;
 
     display: block;
@@ -183,11 +251,16 @@ label {
     text-align: left;
 
     background: #eeeeee;
+
 }
 
+
 .sidebar button:hover {
+
     background: #cccccc;
+
 }
+
 
 
 /* =====================================================
@@ -195,29 +268,34 @@ label {
 ===================================================== */
 
 .content {
+
     flex: 1;
-    min-width: 0;
 
     padding: 20px;
 
     overflow-x: auto;
+
 }
 
-.page {
-    width: 100%;
-}
 
 .page h2 {
+
     margin-top: 0;
 
-    border-bottom: 1px solid #999999;
+    border-bottom:
+        1px solid #999999;
 
     padding-bottom: 8px;
+
 }
 
+
 .page h3 {
+
     margin-top: 25px;
+
 }
+
 
 
 /* =====================================================
@@ -225,81 +303,100 @@ label {
 ===================================================== */
 
 .summary-grid {
+
     display: grid;
 
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 10px;
 
     margin-bottom: 20px;
+
 }
 
+
 .summary-box {
+
     background: white;
 
-    border: 1px solid #999999;
+    border:
+        1px solid #999999;
 
     padding: 15px;
 
-    min-width: 0;
 }
+
 
 .summary-box h3 {
-    margin: 0 0 10px 0;
+
+    margin:
+        0 0 10px 0;
 
     font-size: 14px;
+
 }
 
+
 .summary-box p {
+
     font-size: 22px;
 
     margin: 0;
 
-    overflow-wrap: anywhere;
 }
 
+
 .alert-box {
+
     background: #fff4d6;
+
 }
+
 
 
 /* =====================================================
    TABLES
 ===================================================== */
 
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
 table {
+
     width: 100%;
 
-    border-collapse: collapse;
+    border-collapse:
+        collapse;
 
     background: white;
 
-    min-width: 650px;
 }
+
 
 th,
 td {
-    border: 1px solid #999999;
+
+    border:
+        1px solid #999999;
 
     padding: 8px;
 
     text-align: left;
 
-    white-space: normal;
 }
+
 
 th {
+
     background: #dddddd;
+
 }
 
+
 tr:nth-child(even) {
+
     background: #f7f7f7;
+
 }
+
 
 
 /* =====================================================
@@ -307,36 +404,52 @@ tr:nth-child(even) {
 ===================================================== */
 
 .alert-list {
+
     background: white;
 
-    border: 1px solid #999999;
+    border:
+        1px solid #999999;
 
-    width: 100%;
 }
+
 
 .alert-item {
+
     padding: 10px;
 
-    border-bottom: 1px solid #cccccc;
+    border-bottom:
+        1px solid #cccccc;
 
-    overflow-wrap: anywhere;
 }
+
 
 .alert-item:last-child {
+
     border-bottom: none;
+
 }
+
 
 .alert-warning {
+
     background: #fff4d6;
+
 }
+
 
 .alert-danger {
+
     background: #ffdede;
+
 }
 
+
 .alert-normal {
+
     background: #eeeeee;
+
 }
+
 
 
 /* =====================================================
@@ -344,14 +457,18 @@ tr:nth-child(even) {
 ===================================================== */
 
 .report-box {
+
     background: white;
 
-    border: 1px solid #999999;
+    border:
+        1px solid #999999;
 
     padding: 15px;
 
     margin-bottom: 15px;
+
 }
+
 
 
 /* =====================================================
@@ -359,297 +476,80 @@ tr:nth-child(even) {
 ===================================================== */
 
 .modal {
+
     position: fixed;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
-    background: rgba(0, 0, 0, 0.4);
+    background:
+        rgba(0, 0, 0, 0.4);
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    padding: 15px;
-
-    z-index: 1000;
 }
 
+
 .modal-content {
+
     width: 400px;
-    max-width: 100%;
 
     max-height: 90vh;
-    max-height: 90dvh;
 
     overflow-y: auto;
 
     background: white;
 
-    border: 1px solid #555555;
+    border:
+        1px solid #555555;
 
     padding: 20px;
+
 }
+
 
 .modal-content input {
+
     width: 100%;
+
 }
+
 
 .modal-content button {
+
     margin-top: 15px;
+
 }
 
 
+
 /* =====================================================
-   TABLET
+   MOBILE / SMALL SCREEN
 ===================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
 
     .summary-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
     }
 
-}
-
-
-/* =====================================================
-   PHONE
-===================================================== */
-
-@media (max-width: 600px) {
-
-    body {
-        font-size: 14px;
-    }
-
-
-    /* -------------------------------
-       TOP BAR
-    -------------------------------- */
-
-    .top-bar {
-        min-height: 55px;
-
-        padding: 8px 12px;
-    }
-
-    .system-title {
-        display: flex;
-
-        flex-direction: column;
-
-        gap: 2px;
-    }
-
-    .system-title strong {
-        font-size: 17px;
-    }
-
-    .system-title span {
-        margin-left: 0;
-
-        font-size: 11px;
-    }
-
-    .logout-button {
-        width: auto;
-
-        padding: 6px 10px;
-
-        font-size: 12px;
-    }
-
-
-    /* -------------------------------
-       MAIN LAYOUT
-    -------------------------------- */
-
-    .main-container {
-        display: block;
-
-        min-height: auto;
-    }
-
-
-    /* -------------------------------
-       SIDEBAR BECOMES TOP MENU
-    -------------------------------- */
 
     .sidebar {
-        width: 100%;
 
-        border-right: none;
+        width: 170px;
 
-        border-bottom: 1px solid #999999;
-
-        padding: 8px;
-
-        overflow-x: auto;
-
-        white-space: nowrap;
-    }
-
-    .sidebar > div {
-        display: flex;
-
-        gap: 5px;
-
-        width: max-content;
-
-        min-width: 100%;
-    }
-
-    .sidebar button {
-        display: inline-block;
-
-        width: auto;
-
-        flex-shrink: 0;
-
-        margin-bottom: 0;
-
-        padding: 8px 10px;
-
-        font-size: 12px;
-
-        text-align: center;
-    }
-
-
-    /* -------------------------------
-       CONTENT
-    -------------------------------- */
-
-    .content {
-        width: 100%;
-
-        padding: 12px;
-
-        overflow-x: hidden;
-    }
-
-    .page h2 {
-        font-size: 20px;
-
-        margin-bottom: 15px;
-    }
-
-
-    /* -------------------------------
-       SUMMARY CARDS
-    -------------------------------- */
-
-    .summary-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 8px;
-    }
-
-    .summary-box {
-        padding: 10px;
-    }
-
-    .summary-box h3 {
-        font-size: 12px;
-
-        line-height: 1.3;
-    }
-
-    .summary-box p {
-        font-size: 20px;
-    }
-
-
-    /* -------------------------------
-       TABLES
-    -------------------------------- */
-
-    /*
-       Tables can remain wide internally.
-       The user can swipe horizontally
-       instead of breaking the page.
-    */
-
-    table {
-        min-width: 650px;
-    }
-
-    .content table {
-        display: table;
-    }
-
-
-    /* -------------------------------
-       BUTTONS
-    -------------------------------- */
-
-    .content > button {
-        max-width: 100%;
-    }
-
-
-    /* -------------------------------
-       MODALS
-    -------------------------------- */
-
-    .modal {
-        padding: 10px;
-    }
-
-    .modal-content {
-        width: 100%;
-
-        padding: 15px;
-
-        max-height: 92vh;
-        max-height: 92dvh;
-    }
-
-    .modal-content h2 {
-        font-size: 19px;
-    }
-
-
-    /* -------------------------------
-       REPORTS
-    -------------------------------- */
-
-    .report-box {
-        padding: 12px;
-
-        overflow-wrap: anywhere;
-    }
-
-}
-
-
-/* =====================================================
-   VERY SMALL PHONES
-===================================================== */
-
-@media (max-width: 380px) {
-
-    .content {
-        padding: 8px;
-    }
-
-    .summary-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .summary-box p {
-        font-size: 19px;
-    }
-
-    .sidebar button {
-        padding: 7px 9px;
-
-        font-size: 11px;
     }
 
 }
