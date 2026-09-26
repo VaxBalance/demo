@@ -1,299 +1,1147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>C2S Manual</title>
-  <style>
-    :root {
-      --red: #ff0050;
-      --cyan: #00b7c3;
-      --yellow: #ffa000;
-      --leaf-green: #4caf50;
-      --bg: #ffffff;
-      --text: #333333;
-    }
 
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      text-align: justify;
-    }
+    <meta charset="UTF-8">
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 150px;
-      width: 100%;
-      position: relative;
-      overflow: visible;
-    }
+    <title>VaxBalance</title>
 
-    .header-left,
-    .header-right {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 2rem;
-      font-weight: 700;
-    }
+    <link rel="stylesheet" href="style.css">
 
-    .header-left {
-      background: var(--red);
-    }
-
-    .header-right {
-      background: var(--cyan);
-    }
-
-    .header-logo {
-      position: absolute;
-      top: 115%; /* slightly lower */
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border: 6px solid #fff;
-      z-index: 2;
-    }
-
-    .header-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-    }
-
-    /* Chapter Buttons */
-    .chapter-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 150px 10px 30px 10px; /* pushed down further */
-    }
-
-    .chapter-buttons a {
-      padding: 10px 15px;
-      color: #fff;
-      font-weight: 600;
-      border-radius: 6px;
-      text-align: center;
-      transition: 0.3s;
-      font-size: 1rem;
-    }
-
-    .chapter-1 {
-      background: var(--yellow);
-      color: #000;
-    }
-
-    .chapter-2 {
-      background: var(--red);
-    }
-
-    .chapter-3 {
-      background: var(--cyan);
-    }
-
-    .chapter-4 {
-      background: var(--leaf-green);
-    }
-
-    .chapter-buttons a:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    /* Sections */
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 30px 20px;
-      background: #fff;
-      border-radius: 10px;
-    }
-
-    h2 {
-      color: var(--red);
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    h3 {
-      color: var(--cyan);
-      font-size: 1.5rem;
-      margin-top: 30px;
-    }
-
-    p {
-      margin-bottom: 20px;
-      font-size: 1.05rem;
-    }
-
-    .quote {
-      border-left: 5px solid var(--red);
-      padding-left: 15px;
-      font-style: italic;
-      margin: 20px 0;
-      color: var(--red);
-    }
-
-    .signature {
-      margin-top: 40px;
-      font-weight: bold;
-    }
-
-    ul {
-      margin-left: 20px;
-    }
-
-    footer {
-      background: var(--cyan);
-      color: #fff;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 60px;
-      font-weight: 500;
-    }
-
-    footer a {
-      color: var(--yellow);
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .header-left,
-      .header-right {
-        font-size: 1.2rem;
-      }
-
-      .header-logo {
-        width: 130px;
-        height: 130px;
-        top: 120%;
-      }
-
-      .chapter-buttons {
-        flex-direction: column;
-        align-items: center;
-        margin-top: 160px;
-      }
-
-      .chapter-buttons a {
-        width: 85%;
-        font-size: 1rem;
-      }
-
-      h2 {
-        font-size: 1.4rem;
-      }
-
-      section {
-        padding: 20px;
-      }
-    }
-  </style>
 </head>
+
+
 <body>
-  <header>
-    <div class="header-left"></div>
-    <div class="header-logo">
-      <img src="images/c2s-logoo.png" alt="C2S Logo" />
+
+
+    <!-- =====================================================
+         LOGIN PAGE
+    ====================================================== -->
+
+    <div id="loginPage" class="login-page">
+
+        <div class="login-box">
+
+            <h1>VaxBalance</h1>
+
+            <p>
+                Vaccine Inventory and Patient Immunization Management
+            </p>
+
+            <hr>
+
+
+            <h3>Login</h3>
+
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+            >
+
+
+            <button onclick="login()">
+                Login
+            </button>
+
+
+            <hr>
+
+
+            <p>
+                New patient?
+            </p>
+
+
+            <button onclick="openRegistrationForm()">
+                Register as Patient
+            </button>
+
+
+            <p class="login-note">
+                RHU personnel use their assigned account.
+            </p>
+
+        </div>
+
     </div>
-    <div class="header-right"></div>
-  </header>
 
-  <div class="chapter-buttons">
-    <a href="chapter1.html" class="chapter-1">Chapter 1: Born Again Experience</a>
-    <a href="chapter2.html" class="chapter-2">Chapter 2: Life of a Winner</a>
-    <a href="chapter3.html" class="chapter-3">Chapter 3: Walking in Great Faith</a>
-    <a href="chapter4.html" class="chapter-4">Chapter 4: Marks of a True Follower of Jesus</a>
-  </div>
 
-    <!-- Section 1: Pastor Message -->
-    <section id="pastor-message">
-        <h2>A Message from the Senior Pastor</h2>
-        <p class="quote">“This church’s main job is to save the lost.”</p>
-        <p>Through my years of experience in growing a church, I have tirelessly searched for materials that would disciple the congregation and eventually send them out into the harvest field. The burning desire to fire up churches and not hit a plateau was my motivation. However, good materials I found would be available today and gone tomorrow. Some resources were meaningful but didn’t fit the church’s culture. This could be frustrating and disappointing indeed.</p>
-        <p>Thus, this devotional manual was born to address this need. It is a product of our unwavering passion to save the lost and our commitment to fulfill the Great Commission—not just through addition or multiplication, but ambitiously through a structured manual designed to grow a church exponentially without overburdening our beloved volunteers.</p>
-        <p>This manual would not have become a reality without the help of countless individuals who love the Lord so much. My sincere gratitude goes to everyone who contributed and took part in making this vision happen.</p>
-        <p>Finally, let me say this: a church misses its main purpose when it no longer evangelizes. The Church’s main job is to save the lost, and I would rather close its doors than omit this sacred mission. May this burden continually run in our bloodstream. May this passion burn in our hearts. And may God help us impart this vision to the next generation so that souls will continue to be saved for Jesus.</p>
-        <p class="signature">Loving you much,<br>Dr. Anthony V. Velasco<br>Senior Pastor<br>Church of God World Missions, Philippines<br>Dasmariñas City, Cavite</p>
-    </section>
 
-    <!-- Section 2: What is C2S -->
-    <section id="about-c2s">
-        <h2>WHAT IS C2S ALL ABOUT?</h2>
-        <p>The men and women of Church of God Philippines aspire to transform the Country into a <span class="bullet">born again nation</span>.</p>
-        <p>To turn this vision into reality, the church came up with the <span style="color:var(--cyan); font-weight:bold;">C2S program</span>. C2S is connecting TWO SOULS coming from outside (unbelievers) and inside the church (believers).</p>
-        <p>The C2S program also provides an avenue for discipleship through small groups. It consists of teaching materials like this manual needed for the discipleship of the souls being connected inside and outside the church.</p>
-        <p>The challenge to faithful men and women of faith is to take the time to invest themselves in others by sharing their journey and thereby enriching those around them. Mentoring enhances one's value to another. What a great delight it is for a mentor to see people growing in grace and faith, and seeing them do the same to others, reflecting the Lord Jesus Christ.</p>
-        <p>When Jesus called His disciples, He said, "Follow Me." That was the beginning of the mentoring process. When Jesus invested in those men, they continued the work of the kingdom of God. The Book of Acts records the continuation of His ministry up until today and prayerfully for the next generation. This is the heart and soul of the C2S program.</p>
-    </section>
+    <!-- =====================================================
+         MAIN APPLICATION
+    ====================================================== -->
 
-    <!-- Section 3: Getting Started -->
-    <section id="getting-started">
-        <h2>GETTING STARTED</h2>
-        <p>Welcome to C2S! We are blessed to have you journey with us as we connect 2 souls to the Lord. This C2S Devotional Manual is a guide we have designed to help you mentor your C2S group on how to live in Christ, like Christ, and for Christ. We provided four modules consisting of 6 lessons each, that you and your group can learn together every week. Each lesson is divided into the following sections:</p>
-        <ul>
-            <li><span class="bullet">Connect:</span> Begin each lesson by sharing a story or asking a question to your C2S mentees. This will help you learn more about each other and relate your own experiences to the lesson.</li>
-            <li><span class="bullet">Words to Ponder:</span> Each lesson is based on a key scripture text that your C2S group will reflect on. This section establishes the biblical foundation of the lesson.</li>
-            <li><span class="bullet">Pointers:</span> Use this guide to help your group understand the overall meaning of the scripture and its significance.</li>
-            <li><span class="bullet">Dig Deeper:</span> So what? Why does this scripture matter in your life? Encourage your C2S mentees to share their understanding of the message and its personal impact.</li>
-            <li><span class="bullet">Life Application:</span> Now what? What specific steps will you take to apply the lesson in your daily life?</li>
-            <li><span class="bullet">Pray:</span> Conclude each lesson with prayer and worship, allowing the Holy Spirit to teach your hearts and transform your lives.</li>
-        </ul>
-        <p>As mentors, your goal is to provide your C2S mentees with simple and basic teachings about the 24 lessons and help them understand these teachings. This will start and build the solid foundation they need for lifetime growth in Christ.</p>
-        <p>To help you prepare spiritually and mentally before meeting with your group, here are a few things to remember:</p>
-        <ul>
-            <li><span class="bullet">PRAY:</span> For your C2S group. Seek the Lord’s guidance and depend on the Holy Spirit to give you the right words and wisdom. Pray for your mentees, that they will open their hearts to receive God’s message during your study.</li>
-            <li><span class="bullet">PLAN:</span> Read and study the material you want to present. Go over the scripture texts again and familiarize yourself with the key spiritual truths and principles of each lesson.</li>
-            <li><span class="bullet">PLAY:</span> Think of creative ways to present the material. People learn better when they’re engaged and having fun! Create an exciting learning experience by incorporating stories, videos, songs, games, and other interactive activities.</li>
-        </ul>
-        <p>DURING YOUR SESSION, ALWAYS:</p>
-        <ul>
-            <li><span class="bullet">Start with an opening prayer.</span> Use the prayer time as an opportunity to train them on how to pray.</li>
-            <li><span class="bullet">Do a brief review.</span> Ask your group if they have any questions about the previous lesson. They might have new questions or insights to share from your previous lesson.</li>
-            <li><span class="bullet">Quote memory verses.</span> This will help your group understand that all of these lessons are already given to us by God in His Word, in the Bible.</li>
-            <li><span class="bullet">Close in prayer.</span> Pray for one another. Ask guidance from the Lord to help your group put into practice the things you learned in this session, as well as to be given opportunities to reteach them to other people.</li>
-        </ul>
-        <p>We thank you for devoting your time and taking on God’s mission for us all. We pray that the Lord will use this manual to empower you and your group to share and connect more souls for the Lord.</p>
-    </section>
+    <div id="appPage" class="app-page hidden">
 
-    <!-- Section 4: Journey of a Mentee -->
-    <section id="mentee-journey">
-        <h2>THE JOURNEY OF A MENTEE</h2>
-        <p>As mentees learn and understand each lesson, they develop the desire to teach this manual to others, too. The mentor handling the C2S group will encourage each mentee to teach this manual soon to their newly connected friends (mentees), making them mentors of their own newly formed C2S group. Finally, when mentees finish studying the manual, they can continue teaching the C2S in their own C2S group. With this continued process, developing mentors that will connect everyone to C2S will become a cycle. Let us make connection a lifestyle. Be connected, stay connected.</p>
-    </section>
 
-    <footer>
-        &copy; 2025 Church of God General Trias
-    </footer>
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="top-bar">
+
+            <div class="system-title">
+
+                <strong>VaxBalance</strong>
+
+                <span id="userRoleText"></span>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </header>
+
+
+
+        <div class="main-container">
+
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================== -->
+
+            <aside class="sidebar">
+
+
+                <!-- PATIENT MENU -->
+
+                <div id="patientMenu">
+
+                    <button
+                        onclick="showPage('patientDashboard')"
+                    >
+                        Dashboard
+                    </button>
+
+
+                    <button
+                        onclick="showPage('immunization')"
+                    >
+                        Immunization Records
+                    </button>
+
+
+                    <button
+                        onclick="showPage('schedule')"
+                    >
+                        Vaccination Schedule
+                    </button>
+
+
+                    <button
+                        onclick="showPage('appointments')"
+                    >
+                        Appointments
+                    </button>
+
+
+                    <button
+                        onclick="showPage('vaccineInfo')"
+                    >
+                        Vaccine Information
+                    </button>
+
+                </div>
+
+
+
+                <!-- RHU MENU -->
+
+                <div id="rhuMenu">
+
+                    <button
+                        onclick="showPage('rhuDashboard')"
+                    >
+                        Dashboard
+                    </button>
+
+
+                    <button
+                        onclick="showPage('inventory')"
+                    >
+                        Vaccine Inventory
+                    </button>
+
+
+                    <button
+                        onclick="showPage('patients')"
+                    >
+                        Patient Records
+                    </button>
+
+
+                    <button
+                        onclick="showPage('rhuAppointments')"
+                    >
+                        Appointments
+                    </button>
+
+
+                    <button
+                        onclick="showPage('reports')"
+                    >
+                        Reports
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+
+            <!-- =================================================
+                 MAIN CONTENT
+            ================================================== -->
+
+            <main class="content">
+
+
+
+                <!-- =================================================
+                     PATIENT DASHBOARD
+                ================================================== -->
+
+                <section
+                    id="patientDashboard"
+                    class="page"
+                >
+
+                    <h2>Patient Dashboard</h2>
+
+
+                    <p>
+                        Welcome to VaxBalance.
+                    </p>
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-box">
+
+                            <h3>Next Vaccination</h3>
+
+                            <p id="nextVaccination">
+                                No upcoming vaccination
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Appointments</h3>
+
+                            <p id="patientAppointmentCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Completed Vaccines</h3>
+
+                            <p id="completedVaccineCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box alert-box">
+
+                            <h3>Overdue</h3>
+
+                            <p id="overdueCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <h3>Alerts</h3>
+
+
+                    <div
+                        id="patientAlerts"
+                        class="alert-list"
+                    >
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     IMMUNIZATION RECORDS
+                ================================================== -->
+
+                <section
+                    id="immunization"
+                    class="page hidden"
+                >
+
+                    <h2>Immunization Records</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Dose</th>
+
+                                <th>Date Given</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="immunizationTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     VACCINATION SCHEDULE
+                ================================================== -->
+
+                <section
+                    id="schedule"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccination Schedule</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Dose</th>
+
+                                <th>Scheduled Date</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="scheduleTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PATIENT APPOINTMENTS
+                ================================================== -->
+
+                <section
+                    id="appointments"
+                    class="page hidden"
+                >
+
+                    <h2>My Appointments</h2>
+
+
+                    <button
+                        onclick="openAppointmentForm()"
+                    >
+                        Add Appointment
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Purpose</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="appointmentTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     VACCINE INFORMATION
+                ================================================== -->
+
+                <section
+                    id="vaccineInfo"
+                    class="page hidden"
+                >
+
+                    <h2>Basic Vaccine Information</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Purpose</th>
+
+                                <th>Recommended Doses</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>BCG</td>
+
+                                <td>
+                                    Protection against tuberculosis
+                                </td>
+
+                                <td>1</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Hepatitis B</td>
+
+                                <td>
+                                    Protection against Hepatitis B
+                                </td>
+
+                                <td>3</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Polio</td>
+
+                                <td>
+                                    Protection against poliovirus
+                                </td>
+
+                                <td>Multiple</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>MMR</td>
+
+                                <td>
+                                    Protection against measles,
+                                    mumps and rubella
+                                </td>
+
+                                <td>2</td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RHU DASHBOARD
+                ================================================== -->
+
+                <section
+                    id="rhuDashboard"
+                    class="page hidden"
+                >
+
+                    <h2>RHU Dashboard</h2>
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-box">
+
+                            <h3>Total Patients</h3>
+
+                            <p id="totalPatients">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Total Vaccine Stock</h3>
+
+                            <p id="totalStock">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Low Stock Items</h3>
+
+                            <p id="lowStockCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box alert-box">
+
+                            <h3>Expiring Soon</h3>
+
+                            <p id="expiringCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <h3>System Alerts</h3>
+
+
+                    <div
+                        id="rhuAlerts"
+                        class="alert-list"
+                    >
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     INVENTORY
+                ================================================== -->
+
+                <section
+                    id="inventory"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccine Inventory</h2>
+
+
+                    <button
+                        onclick="openInventoryForm()"
+                    >
+                        Add Vaccine
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Batch Number</th>
+
+                                <th>Quantity</th>
+
+                                <th>Expiration Date</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="inventoryTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PATIENT RECORDS
+                ================================================== -->
+
+                <section
+                    id="patients"
+                    class="page hidden"
+                >
+
+                    <h2>Patient Records</h2>
+
+
+                    <button
+                        onclick="openPatientForm()"
+                    >
+                        Add Patient
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Name</th>
+
+                                <th>Age</th>
+
+                                <th>Contact</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="patientTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RHU APPOINTMENTS
+                ================================================== -->
+
+                <section
+                    id="rhuAppointments"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccination Appointments</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Patient</th>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Purpose</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="rhuAppointmentTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     REPORTS
+                ================================================== -->
+
+                <section
+                    id="reports"
+                    class="page hidden"
+                >
+
+                    <h2>Basic Reports</h2>
+
+
+
+                    <div class="report-box">
+
+                        <h3>Inventory Summary</h3>
+
+
+                        <p>
+
+                            Total vaccine stock:
+
+                            <strong id="reportTotalStock">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Low-stock vaccines:
+
+                            <strong id="reportLowStock">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Expiring vaccines:
+
+                            <strong id="reportExpiring">
+                                0
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="report-box">
+
+                        <h3>Patient Summary</h3>
+
+
+                        <p>
+
+                            Registered patients:
+
+                            <strong id="reportPatients">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Scheduled appointments:
+
+                            <strong id="reportAppointments">
+                                0
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+
+                </section>
+
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PATIENT REGISTRATION MODAL
+    ====================================================== -->
+
+    <div
+        id="registrationModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Patient Registration</h2>
+
+
+            <p>
+                Enter your information to create a patient account.
+            </p>
+
+
+            <label>Patient ID</label>
+
+            <input
+                type="text"
+                id="registerPatientId"
+                placeholder="Example: P004"
+            >
+
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="registerPatientName"
+                placeholder="Enter full name"
+            >
+
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                id="registerPatientAge"
+                placeholder="Enter age"
+            >
+
+
+            <label>Contact Number</label>
+
+            <input
+                type="text"
+                id="registerPatientContact"
+                placeholder="Enter contact number"
+            >
+
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Create username"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Create password"
+            >
+
+
+            <br>
+
+
+            <button
+                onclick="registerPatient()"
+            >
+                Register
+            </button>
+
+
+            <button
+                onclick="closeModal('registrationModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         APPOINTMENT FORM
+    ====================================================== -->
+
+    <div
+        id="appointmentModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Appointment</h2>
+
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                id="appointmentDate"
+            >
+
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                id="appointmentTime"
+            >
+
+
+            <label>Purpose</label>
+
+            <input
+                type="text"
+                id="appointmentPurpose"
+            >
+
+
+            <button
+                onclick="saveAppointment()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('appointmentModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INVENTORY FORM
+    ====================================================== -->
+
+    <div
+        id="inventoryModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Vaccine</h2>
+
+
+            <label>Vaccine Name</label>
+
+            <input
+                type="text"
+                id="vaccineName"
+            >
+
+
+            <label>Batch Number</label>
+
+            <input
+                type="text"
+                id="batchNumber"
+            >
+
+
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                id="vaccineQuantity"
+            >
+
+
+            <label>Expiration Date</label>
+
+            <input
+                type="date"
+                id="expirationDate"
+            >
+
+
+            <button
+                onclick="saveInventory()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('inventoryModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RHU PATIENT FORM
+    ====================================================== -->
+
+    <div
+        id="patientModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Patient</h2>
+
+
+            <label>Patient ID</label>
+
+            <input
+                type="text"
+                id="patientId"
+            >
+
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                id="patientName"
+            >
+
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                id="patientAge"
+            >
+
+
+            <label>Contact</label>
+
+            <input
+                type="text"
+                id="patientContact"
+            >
+
+
+            <button
+                onclick="savePatient()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('patientModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
 
 </body>
-</html>
 
 </html>
-
-
