@@ -1,1147 +1,3931 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaxBalance - Rural Health Unit</title>
 
-    <title>VaxBalance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="style.css">
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            background: #f2f2f2;
+            color: #222;
+        }
 
+        button,
+        input,
+        select,
+        textarea {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================
+           LOGIN / LANDING
+        ========================= */
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border: 1px solid #999;
+            padding: 25px;
+        }
+
+        .system-title {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .system-subtitle {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #888;
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            border: 1px solid #555;
+            background: #e5e5e5;
+            padding: 9px 14px;
+        }
+
+        .btn:hover {
+            background: #d5d5d5;
+        }
+
+        .btn-primary {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .btn-primary:hover {
+            background: #111;
+        }
+
+        .btn-danger {
+            background: #ddd;
+            border-color: #777;
+        }
+
+        .btn-small {
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+
+        .login-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .login-links button {
+            border: none;
+            background: none;
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        .error-message {
+            color: #a00000;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            color: #006600;
+            margin-bottom: 12px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================
+           MAIN SYSTEM
+        ========================= */
+
+        .system {
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: #333;
+            color: white;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topbar-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .topbar-user {
+            font-size: 13px;
+        }
+
+        .logout-btn {
+            background: #eee;
+            border: 1px solid #aaa;
+            padding: 6px 10px;
+            margin-left: 10px;
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 49px);
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #e5e5e5;
+            border-right: 1px solid #aaa;
+            padding: 10px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-weight: bold;
+            padding: 8px;
+            border-bottom: 1px solid #aaa;
+            margin-bottom: 5px;
+        }
+
+        .nav-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid transparent;
+            background: transparent;
+            margin-bottom: 2px;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: white;
+            border-color: #aaa;
+        }
+
+        .main {
+            flex: 1;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .page-description {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: white;
+            border: 1px solid #999;
+            padding: 15px;
+        }
+
+        .summary-label {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .summary-number {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+            border: 1px solid #999;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            border: 1px solid #aaa;
+            padding: 9px;
+            text-align: left;
+        }
+
+        th {
+            background: #ddd;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f7f7f7;
+        }
+
+        /* =========================
+           PANELS
+        ========================= */
+
+        .panel {
+            background: white;
+            border: 1px solid #999;
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            background: #ddd;
+            border-bottom: 1px solid #999;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .panel-body {
+            padding: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .button-row {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           ALERTS
+        ========================= */
+
+        .alert {
+            padding: 10px;
+            border: 1px solid #999;
+            background: #eee;
+            margin-bottom: 10px;
+        }
+
+        .alert-warning {
+            background: #fff5cc;
+            border-color: #b99b00;
+        }
+
+        .alert-danger {
+            background: #f7d7d7;
+            border-color: #a00000;
+        }
+
+        .alert-success {
+            background: #dcefdc;
+            border-color: #4d7a4d;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal-background {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            border: 1px solid #555;
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: #333;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-close {
+            color: white;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #aaa;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .nav-btn {
+                display: inline-block;
+                width: auto;
+                margin-right: 3px;
+                margin-bottom: 3px;
+            }
+
+            .main {
+                padding: 12px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: auto;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-box {
+                padding: 18px;
+            }
+
+            .topbar-title {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
 
-    <!-- =====================================================
-         LOGIN PAGE
-    ====================================================== -->
+<div id="loginPage" class="login-page">
 
-    <div id="loginPage" class="login-page">
+    <div class="login-box">
 
-        <div class="login-box">
+        <div class="system-title">VaxBalance</div>
 
-            <h1>VaxBalance</h1>
+        <div class="system-subtitle">
+            Vaccine Inventory and Patient Immunization Management
+        </div>
 
-            <p>
-                Vaccine Inventory and Patient Immunization Management
-            </p>
+        <div id="loginMessage"></div>
 
-            <hr>
+        <div class="form-group">
+            <label>Login Type</label>
 
+            <select id="loginType">
+                <option value="patient">Patient</option>
+                <option value="rhu">RHU Personnel</option>
+            </select>
+        </div>
 
-            <h3>Login</h3>
-
-
+        <div class="form-group">
             <label>Username</label>
+            <input type="text" id="loginUsername">
+        </div>
 
-            <input
-                type="text"
-                id="username"
-                placeholder="Enter username"
-            >
-
-
+        <div class="form-group">
             <label>Password</label>
+            <input type="password" id="loginPassword">
+        </div>
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-            >
+        <button class="btn btn-primary" style="width:100%;" onclick="login()">
+            Login
+        </button>
 
-
-            <button onclick="login()">
-                Login
-            </button>
-
-
-            <hr>
-
-
-            <p>
-                New patient?
-            </p>
-
-
-            <button onclick="openRegistrationForm()">
+        <div class="login-links">
+            <button onclick="showRegister()">
                 Register as Patient
             </button>
+        </div>
+
+    </div>
+</div>
 
 
-            <p class="login-note">
-                RHU personnel use their assigned account.
-            </p>
+<!-- =====================================================
+     PATIENT SYSTEM
+===================================================== -->
+
+<div id="patientSystem" class="system hidden">
+
+    <div class="topbar">
+
+        <div class="topbar-title">
+            VaxBalance - Patient
+        </div>
+
+        <div class="topbar-user">
+            <span id="patientTopName"></span>
+
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
+        </div>
+
+    </div>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+                Patient Menu
+            </div>
+
+            <button class="nav-btn active"
+                    onclick="patientPage('dashboard', this)">
+                Dashboard
+            </button>
+
+            <button class="nav-btn"
+                    onclick="patientPage('immunization', this)">
+                Immunization Records
+            </button>
+
+            <button class="nav-btn"
+                    onclick="patientPage('schedule', this)">
+                Vaccination Schedule
+            </button>
+
+            <button class="nav-btn"
+                    onclick="patientPage('appointments', this)">
+                Appointments
+            </button>
+
+            <button class="nav-btn"
+                    onclick="patientPage('vaccines', this)">
+                Vaccine Information
+            </button>
+
+            <button class="nav-btn"
+                    onclick="patientPage('profile', this)">
+                My Profile
+            </button>
+
+        </aside>
+
+        <main class="main">
+
+            <!-- PATIENT DASHBOARD -->
+            <section id="patient-dashboard">
+
+                <div class="page-title">
+                    Patient Dashboard
+                </div>
+
+                <div class="page-description">
+                    View your vaccination status and upcoming activities.
+                </div>
+
+                <div id="patientAlerts"></div>
+
+                <div class="summary-grid">
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Completed Doses
+                        </div>
+
+                        <div class="summary-number"
+                             id="patientCompleted">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Upcoming Doses
+                        </div>
+
+                        <div class="summary-number"
+                             id="patientUpcoming">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Overdue Doses
+                        </div>
+
+                        <div class="summary-number"
+                             id="patientOverdue">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Appointments
+                        </div>
+
+                        <div class="summary-number"
+                             id="patientAppointmentCount">
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        Next Appointment
+                    </div>
+
+                    <div class="panel-body"
+                         id="nextAppointment">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT IMMUNIZATION -->
+            <section id="patient-immunization" class="hidden">
+
+                <div class="page-title">
+                    Immunization Records
+                </div>
+
+                <div class="page-description">
+                    Your recorded vaccination history.
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Vaccine</th>
+                                <th>Dose</th>
+                                <th>Date Given</th>
+                                <th>RHU</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="patientImmunizationTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT SCHEDULE -->
+            <section id="patient-schedule" class="hidden">
+
+                <div class="page-title">
+                    Vaccination Schedule
+                </div>
+
+                <div class="page-description">
+                    Required and scheduled vaccine doses.
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Vaccine</th>
+                                <th>Dose</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="patientScheduleTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT APPOINTMENTS -->
+            <section id="patient-appointments" class="hidden">
+
+                <div class="page-title">
+                    Appointments
+                </div>
+
+                <div class="page-description">
+                    Your scheduled RHU appointments.
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Purpose</th>
+                                <th>RHU</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="patientAppointmentTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT VACCINES -->
+            <section id="patient-vaccines" class="hidden">
+
+                <div class="page-title">
+                    Vaccine Information
+                </div>
+
+                <div class="page-description">
+                    Basic information about available vaccines.
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Vaccine</th>
+                                <th>Purpose</th>
+                                <th>Recommended Doses</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="vaccineInfoTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- PATIENT PROFILE -->
+            <section id="patient-profile" class="hidden">
+
+                <div class="page-title">
+                    My Profile
+                </div>
+
+                <div class="page-description">
+                    Your registered patient information.
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        Patient Information
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-grid">
+
+                            <div>
+                                <strong>Full Name</strong>
+                                <div id="profileName"></div>
+                            </div>
+
+                            <div>
+                                <strong>Username</strong>
+                                <div id="profileUsername"></div>
+                            </div>
+
+                            <div>
+                                <strong>Birth Date</strong>
+                                <div id="profileBirthdate"></div>
+                            </div>
+
+                            <div>
+                                <strong>Contact Number</strong>
+                                <div id="profileContact"></div>
+                            </div>
+
+                            <div>
+                                <strong>Barangay</strong>
+                                <div id="profileBarangay"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RHU SYSTEM
+===================================================== -->
+
+<div id="rhuSystem" class="system hidden">
+
+    <div class="topbar">
+
+        <div class="topbar-title">
+            VaxBalance - Rural Health Unit
+        </div>
+
+        <div class="topbar-user">
+
+            RHU Administrator
+
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
 
         </div>
 
     </div>
 
+    <div class="layout">
 
+        <aside class="sidebar">
 
-    <!-- =====================================================
-         MAIN APPLICATION
-    ====================================================== -->
-
-    <div id="appPage" class="app-page hidden">
-
-
-        <!-- =================================================
-             TOP BAR
-        ================================================== -->
-
-        <header class="top-bar">
-
-            <div class="system-title">
-
-                <strong>VaxBalance</strong>
-
-                <span id="userRoleText"></span>
-
+            <div class="sidebar-title">
+                RHU Menu
             </div>
 
-
-            <button
-                class="logout-button"
-                onclick="logout()"
-            >
-                Logout
+            <button class="nav-btn active"
+                    onclick="rhuPage('dashboard', this)">
+                Dashboard
             </button>
 
-        </header>
+            <button class="nav-btn"
+                    onclick="rhuPage('patients', this)">
+                Patients
+            </button>
+
+            <button class="nav-btn"
+                    onclick="rhuPage('immunizations', this)">
+                Immunization Records
+            </button>
+
+            <button class="nav-btn"
+                    onclick="rhuPage('appointments', this)">
+                Appointments
+            </button>
+
+            <button class="nav-btn"
+                    onclick="rhuPage('inventory', this)">
+                Vaccine Inventory
+            </button>
+
+            <button class="nav-btn"
+                    onclick="rhuPage('reports', this)">
+                Reports
+            </button>
+
+        </aside>
+
+        <main class="main">
 
 
+            <!-- RHU DASHBOARD -->
+            <section id="rhu-dashboard">
 
-        <div class="main-container">
+                <div class="page-title">
+                    RHU Dashboard
+                </div>
 
+                <div class="page-description">
+                    Vaccine inventory and patient immunization overview.
+                </div>
 
-            <!-- =================================================
-                 SIDEBAR
-            ================================================== -->
+                <div id="rhuAlerts"></div>
 
-            <aside class="sidebar">
+                <div class="summary-grid">
 
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Registered Patients
+                        </div>
 
-                <!-- PATIENT MENU -->
+                        <div class="summary-number"
+                             id="rhuPatientCount">
+                            0
+                        </div>
+                    </div>
 
-                <div id="patientMenu">
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Vaccine Types
+                        </div>
 
-                    <button
-                        onclick="showPage('patientDashboard')"
-                    >
-                        Dashboard
-                    </button>
+                        <div class="summary-number"
+                             id="rhuVaccineCount">
+                            0
+                        </div>
+                    </div>
 
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Low Stock
+                        </div>
 
-                    <button
-                        onclick="showPage('immunization')"
-                    >
-                        Immunization Records
-                    </button>
+                        <div class="summary-number"
+                             id="rhuLowStock">
+                            0
+                        </div>
+                    </div>
 
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Appointments
+                        </div>
 
-                    <button
-                        onclick="showPage('schedule')"
-                    >
-                        Vaccination Schedule
-                    </button>
-
-
-                    <button
-                        onclick="showPage('appointments')"
-                    >
-                        Appointments
-                    </button>
-
-
-                    <button
-                        onclick="showPage('vaccineInfo')"
-                    >
-                        Vaccine Information
-                    </button>
+                        <div class="summary-number"
+                             id="rhuAppointmentCount">
+                            0
+                        </div>
+                    </div>
 
                 </div>
 
+                <div class="panel">
 
+                    <div class="panel-header">
+                        Inventory Alerts
+                    </div>
 
-                <!-- RHU MENU -->
-
-                <div id="rhuMenu">
-
-                    <button
-                        onclick="showPage('rhuDashboard')"
-                    >
-                        Dashboard
-                    </button>
-
-
-                    <button
-                        onclick="showPage('inventory')"
-                    >
-                        Vaccine Inventory
-                    </button>
-
-
-                    <button
-                        onclick="showPage('patients')"
-                    >
-                        Patient Records
-                    </button>
-
-
-                    <button
-                        onclick="showPage('rhuAppointments')"
-                    >
-                        Appointments
-                    </button>
-
-
-                    <button
-                        onclick="showPage('reports')"
-                    >
-                        Reports
-                    </button>
+                    <div class="panel-body"
+                         id="dashboardInventoryAlerts">
+                    </div>
 
                 </div>
 
-            </aside>
+            </section>
 
 
+            <!-- RHU PATIENTS -->
+            <section id="rhu-patients" class="hidden">
 
-            <!-- =================================================
-                 MAIN CONTENT
-            ================================================== -->
+                <div class="page-title">
+                    Patient Management
+                </div>
 
-            <main class="content">
+                <div class="page-description">
+                    Registered patients using VaxBalance.
+                </div>
 
-
-
-                <!-- =================================================
-                     PATIENT DASHBOARD
-                ================================================== -->
-
-                <section
-                    id="patientDashboard"
-                    class="page"
-                >
-
-                    <h2>Patient Dashboard</h2>
-
-
-                    <p>
-                        Welcome to VaxBalance.
-                    </p>
-
-
-                    <div class="summary-grid">
-
-
-                        <div class="summary-box">
-
-                            <h3>Next Vaccination</h3>
-
-                            <p id="nextVaccination">
-                                No upcoming vaccination
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box">
-
-                            <h3>Appointments</h3>
-
-                            <p id="patientAppointmentCount">
-                                0
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box">
-
-                            <h3>Completed Vaccines</h3>
-
-                            <p id="completedVaccineCount">
-                                0
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box alert-box">
-
-                            <h3>Overdue</h3>
-
-                            <p id="overdueCount">
-                                0
-                            </p>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <h3>Alerts</h3>
-
-
-                    <div
-                        id="patientAlerts"
-                        class="alert-list"
-                    >
-                    </div>
-
-
-                </section>
-
-
-
-                <!-- =================================================
-                     IMMUNIZATION RECORDS
-                ================================================== -->
-
-                <section
-                    id="immunization"
-                    class="page hidden"
-                >
-
-                    <h2>Immunization Records</h2>
-
+                <div class="table-container">
 
                     <table>
 
                         <thead>
 
                             <tr>
-
-                                <th>Vaccine</th>
-
-                                <th>Dose</th>
-
-                                <th>Date Given</th>
-
-                                <th>Status</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="immunizationTable">
-                        </tbody>
-
-                    </table>
-
-                </section>
-
-
-
-                <!-- =================================================
-                     VACCINATION SCHEDULE
-                ================================================== -->
-
-                <section
-                    id="schedule"
-                    class="page hidden"
-                >
-
-                    <h2>Vaccination Schedule</h2>
-
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Vaccine</th>
-
-                                <th>Dose</th>
-
-                                <th>Scheduled Date</th>
-
-                                <th>Status</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="scheduleTable">
-                        </tbody>
-
-                    </table>
-
-                </section>
-
-
-
-                <!-- =================================================
-                     PATIENT APPOINTMENTS
-                ================================================== -->
-
-                <section
-                    id="appointments"
-                    class="page hidden"
-                >
-
-                    <h2>My Appointments</h2>
-
-
-                    <button
-                        onclick="openAppointmentForm()"
-                    >
-                        Add Appointment
-                    </button>
-
-
-                    <br>
-                    <br>
-
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Date</th>
-
-                                <th>Time</th>
-
-                                <th>Purpose</th>
-
-                                <th>Status</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="appointmentTable">
-                        </tbody>
-
-                    </table>
-
-                </section>
-
-
-
-                <!-- =================================================
-                     VACCINE INFORMATION
-                ================================================== -->
-
-                <section
-                    id="vaccineInfo"
-                    class="page hidden"
-                >
-
-                    <h2>Basic Vaccine Information</h2>
-
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Vaccine</th>
-
-                                <th>Purpose</th>
-
-                                <th>Recommended Doses</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                            <tr>
-
-                                <td>BCG</td>
-
-                                <td>
-                                    Protection against tuberculosis
-                                </td>
-
-                                <td>1</td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>Hepatitis B</td>
-
-                                <td>
-                                    Protection against Hepatitis B
-                                </td>
-
-                                <td>3</td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>Polio</td>
-
-                                <td>
-                                    Protection against poliovirus
-                                </td>
-
-                                <td>Multiple</td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td>MMR</td>
-
-                                <td>
-                                    Protection against measles,
-                                    mumps and rubella
-                                </td>
-
-                                <td>2</td>
-
-                            </tr>
-
-
-                        </tbody>
-
-                    </table>
-
-                </section>
-
-
-
-                <!-- =================================================
-                     RHU DASHBOARD
-                ================================================== -->
-
-                <section
-                    id="rhuDashboard"
-                    class="page hidden"
-                >
-
-                    <h2>RHU Dashboard</h2>
-
-
-                    <div class="summary-grid">
-
-
-                        <div class="summary-box">
-
-                            <h3>Total Patients</h3>
-
-                            <p id="totalPatients">
-                                0
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box">
-
-                            <h3>Total Vaccine Stock</h3>
-
-                            <p id="totalStock">
-                                0
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box">
-
-                            <h3>Low Stock Items</h3>
-
-                            <p id="lowStockCount">
-                                0
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="summary-box alert-box">
-
-                            <h3>Expiring Soon</h3>
-
-                            <p id="expiringCount">
-                                0
-                            </p>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <h3>System Alerts</h3>
-
-
-                    <div
-                        id="rhuAlerts"
-                        class="alert-list"
-                    >
-                    </div>
-
-
-                </section>
-
-
-
-                <!-- =================================================
-                     INVENTORY
-                ================================================== -->
-
-                <section
-                    id="inventory"
-                    class="page hidden"
-                >
-
-                    <h2>Vaccine Inventory</h2>
-
-
-                    <button
-                        onclick="openInventoryForm()"
-                    >
-                        Add Vaccine
-                    </button>
-
-
-                    <br>
-                    <br>
-
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Vaccine</th>
-
-                                <th>Batch Number</th>
-
-                                <th>Quantity</th>
-
-                                <th>Expiration Date</th>
-
-                                <th>Status</th>
-
-                                <th>Action</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="inventoryTable">
-                        </tbody>
-
-                    </table>
-
-                </section>
-
-
-
-                <!-- =================================================
-                     PATIENT RECORDS
-                ================================================== -->
-
-                <section
-                    id="patients"
-                    class="page hidden"
-                >
-
-                    <h2>Patient Records</h2>
-
-
-                    <button
-                        onclick="openPatientForm()"
-                    >
-                        Add Patient
-                    </button>
-
-
-                    <br>
-                    <br>
-
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>ID</th>
-
+                                <th>Patient ID</th>
                                 <th>Name</th>
-
-                                <th>Age</th>
-
+                                <th>Birth Date</th>
+                                <th>Barangay</th>
                                 <th>Contact</th>
-
                                 <th>Action</th>
-
                             </tr>
 
                         </thead>
 
-
-                        <tbody id="patientTable">
+                        <tbody id="rhuPatientTable">
                         </tbody>
 
                     </table>
 
-                </section>
+                </div>
+
+            </section>
 
 
+            <!-- RHU IMMUNIZATIONS -->
+            <section id="rhu-immunizations" class="hidden">
 
-                <!-- =================================================
-                     RHU APPOINTMENTS
-                ================================================== -->
+                <div class="page-title">
+                    Immunization Records
+                </div>
 
-                <section
-                    id="rhuAppointments"
-                    class="page hidden"
-                >
+                <div class="page-description">
+                    Add and manage patient vaccination records.
+                </div>
 
-                    <h2>Vaccination Appointments</h2>
+                <div class="panel">
 
+                    <div class="panel-header">
+                        Add Immunization Record
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-grid">
+
+                            <div>
+                                <label>Patient</label>
+
+                                <select id="immunizationPatient">
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Vaccine</label>
+
+                                <select id="immunizationVaccine">
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Dose</label>
+
+                                <input type="text"
+                                       id="immunizationDose"
+                                       placeholder="e.g. Dose 1">
+                            </div>
+
+                            <div>
+                                <label>Date Given</label>
+
+                                <input type="date"
+                                       id="immunizationDate">
+                            </div>
+
+                            <div class="form-full">
+
+                                <label>Notes</label>
+
+                                <textarea id="immunizationNotes"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="button-row">
+
+                            <button class="btn btn-primary"
+                                    onclick="addImmunization()">
+                                Save Immunization
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
 
                     <table>
 
                         <thead>
 
                             <tr>
-
                                 <th>Patient</th>
-
-                                <th>Date</th>
-
-                                <th>Time</th>
-
-                                <th>Purpose</th>
-
-                                <th>Status</th>
-
-                                <th>Action</th>
-
+                                <th>Vaccine</th>
+                                <th>Dose</th>
+                                <th>Date Given</th>
+                                <th>RHU</th>
                             </tr>
 
                         </thead>
 
+                        <tbody id="rhuImmunizationTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- RHU APPOINTMENTS -->
+            <section id="rhu-appointments" class="hidden">
+
+                <div class="page-title">
+                    Appointment Management
+                </div>
+
+                <div class="page-description">
+                    Create vaccination appointments for patients.
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        Add Appointment
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-grid">
+
+                            <div>
+                                <label>Patient</label>
+
+                                <select id="appointmentPatient">
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Date</label>
+
+                                <input type="date"
+                                       id="appointmentDate">
+                            </div>
+
+                            <div>
+                                <label>Time</label>
+
+                                <input type="time"
+                                       id="appointmentTime">
+                            </div>
+
+                            <div>
+                                <label>Purpose</label>
+
+                                <input type="text"
+                                       id="appointmentPurpose"
+                                       placeholder="Vaccination / Follow-up">
+                            </div>
+
+                        </div>
+
+                        <div class="button-row">
+
+                            <button class="btn btn-primary"
+                                    onclick="addAppointment()">
+                                Save Appointment
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Purpose</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
 
                         <tbody id="rhuAppointmentTable">
                         </tbody>
 
                     </table>
 
-                </section>
+                </div>
+
+            </section>
 
 
+            <!-- RHU INVENTORY -->
+            <section id="rhu-inventory" class="hidden">
 
-                <!-- =================================================
-                     REPORTS
-                ================================================== -->
+                <div class="page-title">
+                    Vaccine Inventory
+                </div>
 
-                <section
-                    id="reports"
-                    class="page hidden"
-                >
+                <div class="page-description">
+                    Monitor vaccine quantities and expiration dates.
+                </div>
 
-                    <h2>Basic Reports</h2>
+                <div class="panel">
 
+                    <div class="panel-header">
+                        Add Vaccine Inventory
+                    </div>
 
+                    <div class="panel-body">
 
-                    <div class="report-box">
+                        <div class="form-grid">
 
-                        <h3>Inventory Summary</h3>
+                            <div>
+                                <label>Vaccine Name</label>
 
+                                <input type="text"
+                                       id="inventoryName"
+                                       placeholder="e.g. BCG">
+                            </div>
 
-                        <p>
+                            <div>
+                                <label>Batch Number</label>
 
-                            Total vaccine stock:
+                                <input type="text"
+                                       id="inventoryBatch"
+                                       placeholder="e.g. BCG-001">
+                            </div>
 
-                            <strong id="reportTotalStock">
-                                0
-                            </strong>
+                            <div>
+                                <label>Quantity</label>
 
-                        </p>
+                                <input type="number"
+                                       id="inventoryQuantity"
+                                       min="0">
+                            </div>
 
+                            <div>
+                                <label>Low Stock Level</label>
 
-                        <p>
+                                <input type="number"
+                                       id="inventoryLowStock"
+                                       min="0"
+                                       value="10">
+                            </div>
 
-                            Low-stock vaccines:
+                            <div>
+                                <label>Expiration Date</label>
 
-                            <strong id="reportLowStock">
-                                0
-                            </strong>
+                                <input type="date"
+                                       id="inventoryExpiration">
+                            </div>
 
-                        </p>
+                        </div>
 
+                        <div class="button-row">
 
-                        <p>
+                            <button class="btn btn-primary"
+                                    onclick="addInventory()">
+                                Add Inventory
+                            </button>
 
-                            Expiring vaccines:
-
-                            <strong id="reportExpiring">
-                                0
-                            </strong>
-
-                        </p>
+                        </div>
 
                     </div>
 
+                </div>
 
 
-                    <div class="report-box">
+                <div class="table-container">
 
-                        <h3>Patient Summary</h3>
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Vaccine</th>
+                                <th>Batch</th>
+                                <th>Quantity</th>
+                                <th>Low Stock Level</th>
+                                <th>Expiration</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="inventoryTable">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
 
 
-                        <p>
+            <!-- RHU REPORTS -->
+            <section id="rhu-reports" class="hidden">
 
-                            Registered patients:
+                <div class="page-title">
+                    Reports
+                </div>
 
-                            <strong id="reportPatients">
-                                0
-                            </strong>
+                <div class="page-description">
+                    Basic VaxBalance system reports.
+                </div>
 
-                        </p>
+                <div class="summary-grid">
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Total Patients
+                        </div>
+
+                        <div class="summary-number"
+                             id="reportPatients">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Total Immunizations
+                        </div>
+
+                        <div class="summary-number"
+                             id="reportImmunizations">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Total Appointments
+                        </div>
+
+                        <div class="summary-number"
+                             id="reportAppointments">
+                            0
+                        </div>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-label">
+                            Vaccine Inventory Units
+                        </div>
+
+                        <div class="summary-number"
+                             id="reportInventoryUnits">
+                            0
+                        </div>
+                    </div>
+
+                </div>
 
 
-                        <p>
+                <div class="panel">
 
-                            Scheduled appointments:
+                    <div class="panel-header">
+                        Immunization Summary
+                    </div>
 
-                            <strong id="reportAppointments">
-                                0
-                            </strong>
+                    <div class="panel-body">
 
-                        </p>
+                        <div class="table-container">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Vaccine</th>
+                                        <th>Total Doses Given</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="immunizationReportTable">
+                                </tbody>
+
+                            </table>
+
+                        </div>
 
                     </div>
 
+                </div>
 
-                </section>
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
 
 
-            </main>
+<!-- =====================================================
+     PATIENT REGISTRATION
+===================================================== -->
+
+<div id="registerModal" class="modal-background hidden">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <span>Patient Registration</span>
+
+            <button class="modal-close"
+                    onclick="closeRegister()">
+                X
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="registerMessage"></div>
+
+            <div class="form-grid">
+
+                <div class="form-full">
+                    <label>Full Name</label>
+
+                    <input type="text"
+                           id="registerName"
+                           placeholder="Juan Dela Cruz">
+                </div>
+
+                <div>
+                    <label>Birth Date</label>
+
+                    <input type="date"
+                           id="registerBirthdate">
+                </div>
+
+                <div>
+                    <label>Contact Number</label>
+
+                    <input type="text"
+                           id="registerContact"
+                           placeholder="09XXXXXXXXX">
+                </div>
+
+                <div>
+                    <label>Barangay</label>
+
+                    <input type="text"
+                           id="registerBarangay">
+                </div>
+
+                <div>
+                    <label>Username</label>
+
+                    <input type="text"
+                           id="registerUsername">
+                </div>
+
+                <div>
+                    <label>Password</label>
+
+                    <input type="password"
+                           id="registerPassword">
+                </div>
+
+            </div>
+
+            <div class="button-row">
+
+                <button class="btn btn-primary"
+                        onclick="registerPatient()">
+                    Register
+                </button>
+
+                <button class="btn"
+                        onclick="closeRegister()">
+                    Cancel
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
+</div>
 
 
-    <!-- =====================================================
-         PATIENT REGISTRATION MODAL
-    ====================================================== -->
+<!-- =====================================================
+     PATIENT DETAILS MODAL
+===================================================== -->
 
-    <div
-        id="registrationModal"
-        class="modal hidden"
-    >
+<div id="patientDetailsModal"
+     class="modal-background hidden">
 
-        <div class="modal-content">
+    <div class="modal">
 
-            <h2>Patient Registration</h2>
+        <div class="modal-header">
 
+            <span>Patient Details</span>
 
-            <p>
-                Enter your information to create a patient account.
-            </p>
-
-
-            <label>Patient ID</label>
-
-            <input
-                type="text"
-                id="registerPatientId"
-                placeholder="Example: P004"
-            >
-
-
-            <label>Full Name</label>
-
-            <input
-                type="text"
-                id="registerPatientName"
-                placeholder="Enter full name"
-            >
-
-
-            <label>Age</label>
-
-            <input
-                type="number"
-                id="registerPatientAge"
-                placeholder="Enter age"
-            >
-
-
-            <label>Contact Number</label>
-
-            <input
-                type="text"
-                id="registerPatientContact"
-                placeholder="Enter contact number"
-            >
-
-
-            <label>Username</label>
-
-            <input
-                type="text"
-                id="registerUsername"
-                placeholder="Create username"
-            >
-
-
-            <label>Password</label>
-
-            <input
-                type="password"
-                id="registerPassword"
-                placeholder="Create password"
-            >
-
-
-            <br>
-
-
-            <button
-                onclick="registerPatient()"
-            >
-                Register
-            </button>
-
-
-            <button
-                onclick="closeModal('registrationModal')"
-            >
-                Cancel
+            <button class="modal-close"
+                    onclick="closePatientDetails()">
+                X
             </button>
 
         </div>
 
-    </div>
-
-
-
-    <!-- =====================================================
-         APPOINTMENT FORM
-    ====================================================== -->
-
-    <div
-        id="appointmentModal"
-        class="modal hidden"
-    >
-
-        <div class="modal-content">
-
-            <h2>Add Appointment</h2>
-
-
-            <label>Date</label>
-
-            <input
-                type="date"
-                id="appointmentDate"
-            >
-
-
-            <label>Time</label>
-
-            <input
-                type="time"
-                id="appointmentTime"
-            >
-
-
-            <label>Purpose</label>
-
-            <input
-                type="text"
-                id="appointmentPurpose"
-            >
-
-
-            <button
-                onclick="saveAppointment()"
-            >
-                Save
-            </button>
-
-
-            <button
-                onclick="closeModal('appointmentModal')"
-            >
-                Cancel
-            </button>
-
+        <div class="modal-body"
+             id="patientDetailsContent">
         </div>
 
     </div>
 
+</div>
 
 
-    <!-- =====================================================
-         INVENTORY FORM
-    ====================================================== -->
+<script>
 
-    <div
-        id="inventoryModal"
-        class="modal hidden"
-    >
+/* =====================================================
+   DATA STORAGE
+===================================================== */
 
-        <div class="modal-content">
-
-            <h2>Add Vaccine</h2>
-
-
-            <label>Vaccine Name</label>
-
-            <input
-                type="text"
-                id="vaccineName"
-            >
+const STORAGE_KEYS = {
+    users: "vaxbalance_users",
+    inventory: "vaxbalance_inventory",
+    immunizations: "vaxbalance_immunizations",
+    appointments: "vaxbalance_appointments",
+    currentUser: "vaxbalance_current_user"
+};
 
 
-            <label>Batch Number</label>
+/* =====================================================
+   BASIC VACCINE INFORMATION
+===================================================== */
 
-            <input
-                type="text"
-                id="batchNumber"
-            >
-
-
-            <label>Quantity</label>
-
-            <input
-                type="number"
-                id="vaccineQuantity"
-            >
-
-
-            <label>Expiration Date</label>
-
-            <input
-                type="date"
-                id="expirationDate"
-            >
-
-
-            <button
-                onclick="saveInventory()"
-            >
-                Save
-            </button>
-
-
-            <button
-                onclick="closeModal('inventoryModal')"
-            >
-                Cancel
-            </button>
-
-        </div>
-
-    </div>
+const vaccineInformation = [
+    {
+        name: "BCG",
+        purpose: "Helps protect against severe forms of tuberculosis.",
+        doses: "1"
+    },
+    {
+        name: "Hepatitis B",
+        purpose: "Helps prevent hepatitis B infection.",
+        doses: "3"
+    },
+    {
+        name: "Pentavalent",
+        purpose: "Protects against several vaccine-preventable diseases.",
+        doses: "3"
+    },
+    {
+        name: "OPV",
+        purpose: "Helps protect against poliovirus.",
+        doses: "Multiple"
+    },
+    {
+        name: "IPV",
+        purpose: "Helps protect against poliovirus.",
+        doses: "2"
+    },
+    {
+        name: "MMR",
+        purpose: "Helps protect against measles, mumps and rubella.",
+        doses: "2"
+    }
+];
 
 
+/* =====================================================
+   INITIAL DATA
+===================================================== */
 
-    <!-- =====================================================
-         RHU PATIENT FORM
-    ====================================================== -->
+function initializeData() {
 
-    <div
-        id="patientModal"
-        class="modal hidden"
-    >
+    if (!localStorage.getItem(STORAGE_KEYS.users)) {
+        localStorage.setItem(
+            STORAGE_KEYS.users,
+            JSON.stringify([])
+        );
+    }
 
-        <div class="modal-content">
+    if (!localStorage.getItem(STORAGE_KEYS.inventory)) {
 
-            <h2>Add Patient</h2>
+        const starterInventory = [
+            {
+                id: Date.now() + 1,
+                name: "BCG",
+                batch: "BCG-001",
+                quantity: 25,
+                lowStock: 10,
+                expiration: "2027-06-30"
+            },
+            {
+                id: Date.now() + 2,
+                name: "Hepatitis B",
+                batch: "HEPB-001",
+                quantity: 15,
+                lowStock: 10,
+                expiration: "2027-04-30"
+            },
+            {
+                id: Date.now() + 3,
+                name: "MMR",
+                batch: "MMR-001",
+                quantity: 8,
+                lowStock: 10,
+                expiration: "2026-12-31"
+            }
+        ];
 
+        localStorage.setItem(
+            STORAGE_KEYS.inventory,
+            JSON.stringify(starterInventory)
+        );
+    }
 
-            <label>Patient ID</label>
+    if (!localStorage.getItem(STORAGE_KEYS.immunizations)) {
 
-            <input
-                type="text"
-                id="patientId"
-            >
+        localStorage.setItem(
+            STORAGE_KEYS.immunizations,
+            JSON.stringify([])
+        );
+    }
 
+    if (!localStorage.getItem(STORAGE_KEYS.appointments)) {
 
-            <label>Name</label>
-
-            <input
-                type="text"
-                id="patientName"
-            >
-
-
-            <label>Age</label>
-
-            <input
-                type="number"
-                id="patientAge"
-            >
-
-
-            <label>Contact</label>
-
-            <input
-                type="text"
-                id="patientContact"
-            >
-
-
-            <button
-                onclick="savePatient()"
-            >
-                Save
-            </button>
-
-
-            <button
-                onclick="closeModal('patientModal')"
-            >
-                Cancel
-            </button>
-
-        </div>
-
-    </div>
+        localStorage.setItem(
+            STORAGE_KEYS.appointments,
+            JSON.stringify([])
+        );
+    }
+}
 
 
+/* =====================================================
+   STORAGE HELPERS
+===================================================== */
 
-    <!-- JAVASCRIPT -->
+function getUsers() {
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEYS.users) || "[]"
+    );
+}
 
-    <script src="script.js"></script>
+function saveUsers(data) {
+    localStorage.setItem(
+        STORAGE_KEYS.users,
+        JSON.stringify(data)
+    );
+}
 
+function getInventory() {
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEYS.inventory) || "[]"
+    );
+}
+
+function saveInventory(data) {
+    localStorage.setItem(
+        STORAGE_KEYS.inventory,
+        JSON.stringify(data)
+    );
+}
+
+function getImmunizations() {
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEYS.immunizations) || "[]"
+    );
+}
+
+function saveImmunizations(data) {
+    localStorage.setItem(
+        STORAGE_KEYS.immunizations,
+        JSON.stringify(data)
+    );
+}
+
+function getAppointments() {
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEYS.appointments) || "[]"
+    );
+}
+
+function saveAppointments(data) {
+    localStorage.setItem(
+        STORAGE_KEYS.appointments,
+        JSON.stringify(data)
+    );
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login() {
+
+    const type =
+        document.getElementById("loginType").value;
+
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    message.innerHTML = "";
+
+    if (!username || !password) {
+
+        message.innerHTML =
+            '<div class="error-message">Please enter username and password.</div>';
+
+        return;
+    }
+
+
+    /* RHU LOGIN */
+
+    if (type === "rhu") {
+
+        if (
+            username === "Admin123" &&
+            password === "123"
+        ) {
+
+            localStorage.setItem(
+                STORAGE_KEYS.currentUser,
+                JSON.stringify({
+                    type: "rhu",
+                    username: username
+                })
+            );
+
+            showRHU();
+
+            return;
+
+        } else {
+
+            message.innerHTML =
+                '<div class="error-message">Invalid RHU username or password.</div>';
+
+            return;
+        }
+    }
+
+
+    /* PATIENT LOGIN */
+
+    const users = getUsers();
+
+    const user = users.find(function(item) {
+
+        return (
+            item.username === username &&
+            item.password === password
+        );
+
+    });
+
+
+    if (!user) {
+
+        message.innerHTML =
+            '<div class="error-message">Invalid patient username or password.</div>';
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        STORAGE_KEYS.currentUser,
+        JSON.stringify({
+            type: "patient",
+            id: user.id
+        })
+    );
+
+    showPatient(user);
+
+}
+
+
+/* =====================================================
+   PATIENT REGISTRATION
+===================================================== */
+
+function showRegister() {
+
+    document
+        .getElementById("registerModal")
+        .classList.remove("hidden");
+
+}
+
+function closeRegister() {
+
+    document
+        .getElementById("registerModal")
+        .classList.add("hidden");
+
+    document.getElementById("registerMessage").innerHTML = "";
+
+}
+
+
+function registerPatient() {
+
+    const name =
+        document.getElementById("registerName").value.trim();
+
+    const birthdate =
+        document.getElementById("registerBirthdate").value;
+
+    const contact =
+        document.getElementById("registerContact").value.trim();
+
+    const barangay =
+        document.getElementById("registerBarangay").value.trim();
+
+    const username =
+        document.getElementById("registerUsername").value.trim();
+
+    const password =
+        document.getElementById("registerPassword").value;
+
+
+    const message =
+        document.getElementById("registerMessage");
+
+
+    if (
+        !name ||
+        !birthdate ||
+        !contact ||
+        !barangay ||
+        !username ||
+        !password
+    ) {
+
+        message.innerHTML =
+            '<div class="error-message">Please complete all fields.</div>';
+
+        return;
+    }
+
+
+    const users = getUsers();
+
+
+    const existingUser = users.find(function(user) {
+
+        return user.username.toLowerCase() === username.toLowerCase();
+
+    });
+
+
+    if (existingUser) {
+
+        message.innerHTML =
+            '<div class="error-message">Username already exists.</div>';
+
+        return;
+    }
+
+
+    const patient = {
+
+        id: "PAT-" + Date.now(),
+
+        name: name,
+
+        birthdate: birthdate,
+
+        contact: contact,
+
+        barangay: barangay,
+
+        username: username,
+
+        password: password,
+
+        registeredDate:
+            new Date().toISOString().split("T")[0]
+
+    };
+
+
+    users.push(patient);
+
+    saveUsers(users);
+
+
+    message.innerHTML =
+        '<div class="success-message">Registration successful. You may now log in.</div>';
+
+
+    document.getElementById("registerName").value = "";
+    document.getElementById("registerBirthdate").value = "";
+    document.getElementById("registerContact").value = "";
+    document.getElementById("registerBarangay").value = "";
+    document.getElementById("registerUsername").value = "";
+    document.getElementById("registerPassword").value = "";
+
+
+    setTimeout(function() {
+
+        closeRegister();
+
+    }, 1200);
+
+}
+
+
+/* =====================================================
+   SHOW PATIENT SYSTEM
+===================================================== */
+
+function showPatient(user) {
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("rhuSystem")
+        .classList.add("hidden");
+
+    document
+        .getElementById("patientSystem")
+        .classList.remove("hidden");
+
+
+    document.getElementById("patientTopName").textContent =
+        user.name;
+
+
+    refreshPatientDashboard();
+
+    patientPage("dashboard");
+
+}
+
+
+/* =====================================================
+   SHOW RHU SYSTEM
+===================================================== */
+
+function showRHU() {
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("patientSystem")
+        .classList.add("hidden");
+
+    document
+        .getElementById("rhuSystem")
+        .classList.remove("hidden");
+
+
+    refreshRHUDashboard();
+
+    rhuPage("dashboard");
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        STORAGE_KEYS.currentUser
+    );
+
+    document
+        .getElementById("patientSystem")
+        .classList.add("hidden");
+
+    document
+        .getElementById("rhuSystem")
+        .classList.add("hidden");
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document.getElementById("loginUsername").value = "";
+    document.getElementById("loginPassword").value = "";
+
+}
+
+
+/* =====================================================
+   CURRENT PATIENT
+===================================================== */
+
+function getCurrentPatient() {
+
+    const currentUser = JSON.parse(
+        localStorage.getItem(STORAGE_KEYS.currentUser)
+    );
+
+    if (!currentUser ||
+        currentUser.type !== "patient") {
+
+        return null;
+    }
+
+
+    const users = getUsers();
+
+    return users.find(function(user) {
+
+        return user.id === currentUser.id;
+
+    }) || null;
+
+}
+
+
+/* =====================================================
+   PATIENT NAVIGATION
+===================================================== */
+
+function patientPage(page, button) {
+
+    const pages = [
+        "dashboard",
+        "immunization",
+        "schedule",
+        "appointments",
+        "vaccines",
+        "profile"
+    ];
+
+
+    pages.forEach(function(item) {
+
+        const element =
+            document.getElementById(
+                "patient-" + item
+            );
+
+        if (element) {
+            element.classList.add("hidden");
+        }
+
+    });
+
+
+    const selected =
+        document.getElementById(
+            "patient-" + page
+        );
+
+    if (selected) {
+        selected.classList.remove("hidden");
+    }
+
+
+    document
+        .querySelectorAll("#patientSystem .nav-btn")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+
+    if (page === "dashboard") {
+        refreshPatientDashboard();
+    }
+
+    if (page === "immunization") {
+        renderPatientImmunizations();
+    }
+
+    if (page === "schedule") {
+        renderPatientSchedule();
+    }
+
+    if (page === "appointments") {
+        renderPatientAppointments();
+    }
+
+    if (page === "vaccines") {
+        renderVaccineInformation();
+    }
+
+    if (page === "profile") {
+        renderPatientProfile();
+    }
+
+}
+
+
+/* =====================================================
+   PATIENT DASHBOARD
+===================================================== */
+
+function refreshPatientDashboard() {
+
+    const patient = getCurrentPatient();
+
+    if (!patient) return;
+
+
+    const immunizations = getImmunizations()
+        .filter(function(record) {
+
+            return record.patientId === patient.id;
+
+        });
+
+
+    const appointments = getAppointments()
+        .filter(function(appointment) {
+
+            return appointment.patientId === patient.id;
+
+        });
+
+
+    const schedule = generatePatientSchedule(patient);
+
+
+    const completed =
+        immunizations.length;
+
+
+    const upcoming =
+        schedule.filter(function(item) {
+
+            return item.status === "Upcoming";
+
+        }).length;
+
+
+    const overdue =
+        schedule.filter(function(item) {
+
+            return item.status === "Overdue";
+
+        }).length;
+
+
+    document.getElementById("patientCompleted")
+        .textContent = completed;
+
+    document.getElementById("patientUpcoming")
+        .textContent = upcoming;
+
+    document.getElementById("patientOverdue")
+        .textContent = overdue;
+
+    document.getElementById("patientAppointmentCount")
+        .textContent = appointments.length;
+
+
+    renderPatientAlerts(
+        upcoming,
+        overdue
+    );
+
+
+    const futureAppointments =
+        appointments
+            .filter(function(item) {
+
+                return item.status !== "Completed";
+
+            })
+            .sort(function(a, b) {
+
+                return (
+                    a.date + a.time
+                ).localeCompare(
+                    b.date + b.time
+                );
+
+            });
+
+
+    const next =
+        futureAppointments[0];
+
+
+    const nextElement =
+        document.getElementById("nextAppointment");
+
+
+    if (!next) {
+
+        nextElement.innerHTML =
+            "No upcoming appointment.";
+
+    } else {
+
+        nextElement.innerHTML =
+
+            "<strong>" +
+            escapeHTML(next.purpose) +
+            "</strong><br>" +
+
+            "Date: " +
+            escapeHTML(next.date) +
+            "<br>" +
+
+            "Time: " +
+            escapeHTML(next.time) +
+            "<br>" +
+
+            "RHU: Rural Health Unit";
+
+    }
+
+}
+
+
+/* =====================================================
+   PATIENT ALERTS
+===================================================== */
+
+function renderPatientAlerts(
+    upcoming,
+    overdue
+) {
+
+    const container =
+        document.getElementById("patientAlerts");
+
+    let html = "";
+
+
+    if (overdue > 0) {
+
+        html +=
+            '<div class="alert alert-danger">' +
+            "You have " +
+            overdue +
+            " overdue vaccination dose(s)." +
+            "</div>";
+
+    }
+
+
+    if (upcoming > 0) {
+
+        html +=
+            '<div class="alert alert-warning">' +
+            "You have " +
+            upcoming +
+            " upcoming vaccination dose(s)." +
+            "</div>";
+
+    }
+
+
+    if (!html) {
+
+        html =
+            '<div class="alert alert-success">' +
+            "No overdue vaccination doses." +
+            "</div>";
+
+    }
+
+
+    container.innerHTML = html;
+
+}
+
+
+/* =====================================================
+   PATIENT IMMUNIZATION TABLE
+===================================================== */
+
+function renderPatientImmunizations() {
+
+    const patient = getCurrentPatient();
+
+    if (!patient) return;
+
+
+    const records =
+        getImmunizations()
+            .filter(function(record) {
+
+                return record.patientId === patient.id;
+
+            });
+
+
+    const table =
+        document.getElementById(
+            "patientImmunizationTable"
+        );
+
+
+    if (records.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="5">No immunization records found.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        records.map(function(record) {
+
+            return `
+                <tr>
+                    <td>${escapeHTML(record.vaccine)}</td>
+                    <td>${escapeHTML(record.dose)}</td>
+                    <td>${escapeHTML(record.date)}</td>
+                    <td>Rural Health Unit</td>
+                    <td>Completed</td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   GENERATE PATIENT SCHEDULE
+===================================================== */
+
+function generatePatientSchedule(patient) {
+
+    const records =
+        getImmunizations()
+            .filter(function(record) {
+
+                return record.patientId === patient.id;
+
+            });
+
+
+    const schedules = [];
+
+
+    const standardSchedule = [
+
+        {
+            vaccine: "BCG",
+            dose: "Dose 1",
+            days: 0
+        },
+
+        {
+            vaccine: "Hepatitis B",
+            dose: "Dose 1",
+            days: 0
+        },
+
+        {
+            vaccine: "Pentavalent",
+            dose: "Dose 1",
+            days: 42
+        },
+
+        {
+            vaccine: "Pentavalent",
+            dose: "Dose 2",
+            days: 70
+        },
+
+        {
+            vaccine: "Pentavalent",
+            dose: "Dose 3",
+            days: 98
+        },
+
+        {
+            vaccine: "MMR",
+            dose: "Dose 1",
+            days: 270
+        },
+
+        {
+            vaccine: "MMR",
+            dose: "Dose 2",
+            days: 450
+        }
+
+    ];
+
+
+    standardSchedule.forEach(function(item) {
+
+        const completed =
+            records.find(function(record) {
+
+                return (
+                    record.vaccine === item.vaccine &&
+                    record.dose === item.dose
+                );
+
+            });
+
+
+        if (completed) {
+
+            schedules.push({
+
+                vaccine: item.vaccine,
+                dose: item.dose,
+                dueDate: completed.date,
+                status: "Completed"
+
+            });
+
+            return;
+        }
+
+
+        let baseDate =
+            new Date(patient.birthdate);
+
+
+        baseDate.setDate(
+            baseDate.getDate() + item.days
+        );
+
+
+        const dueDate =
+            baseDate.toISOString().split("T")[0];
+
+
+        const today =
+            new Date().toISOString().split("T")[0];
+
+
+        let status =
+            "Upcoming";
+
+
+        if (dueDate < today) {
+            status = "Overdue";
+        }
+
+
+        schedules.push({
+
+            vaccine: item.vaccine,
+            dose: item.dose,
+            dueDate: dueDate,
+            status: status
+
+        });
+
+    });
+
+
+    return schedules;
+
+}
+
+
+/* =====================================================
+   PATIENT SCHEDULE TABLE
+===================================================== */
+
+function renderPatientSchedule() {
+
+    const patient = getCurrentPatient();
+
+    if (!patient) return;
+
+
+    const schedule =
+        generatePatientSchedule(patient);
+
+
+    const table =
+        document.getElementById(
+            "patientScheduleTable"
+        );
+
+
+    table.innerHTML =
+        schedule.map(function(item) {
+
+            return `
+                <tr>
+                    <td>${escapeHTML(item.vaccine)}</td>
+                    <td>${escapeHTML(item.dose)}</td>
+                    <td>${escapeHTML(item.dueDate)}</td>
+                    <td>${escapeHTML(item.status)}</td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   PATIENT APPOINTMENTS
+===================================================== */
+
+function renderPatientAppointments() {
+
+    const patient = getCurrentPatient();
+
+    if (!patient) return;
+
+
+    const appointments =
+        getAppointments()
+            .filter(function(item) {
+
+                return item.patientId === patient.id;
+
+            });
+
+
+    const table =
+        document.getElementById(
+            "patientAppointmentTable"
+        );
+
+
+    if (appointments.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="5">No appointments found.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        appointments.map(function(item) {
+
+            return `
+                <tr>
+                    <td>${escapeHTML(item.date)}</td>
+                    <td>${escapeHTML(item.time)}</td>
+                    <td>${escapeHTML(item.purpose)}</td>
+                    <td>Rural Health Unit</td>
+                    <td>${escapeHTML(item.status)}</td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   VACCINE INFORMATION
+===================================================== */
+
+function renderVaccineInformation() {
+
+    const table =
+        document.getElementById(
+            "vaccineInfoTable"
+        );
+
+
+    table.innerHTML =
+        vaccineInformation.map(function(vaccine) {
+
+            return `
+                <tr>
+                    <td>${escapeHTML(vaccine.name)}</td>
+                    <td>${escapeHTML(vaccine.purpose)}</td>
+                    <td>${escapeHTML(vaccine.doses)}</td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   PATIENT PROFILE
+===================================================== */
+
+function renderPatientProfile() {
+
+    const patient = getCurrentPatient();
+
+    if (!patient) return;
+
+
+    document.getElementById("profileName")
+        .textContent = patient.name;
+
+    document.getElementById("profileUsername")
+        .textContent = patient.username;
+
+    document.getElementById("profileBirthdate")
+        .textContent = patient.birthdate;
+
+    document.getElementById("profileContact")
+        .textContent = patient.contact;
+
+    document.getElementById("profileBarangay")
+        .textContent = patient.barangay;
+
+}
+
+
+/* =====================================================
+   RHU NAVIGATION
+===================================================== */
+
+function rhuPage(page, button) {
+
+    const pages = [
+        "dashboard",
+        "patients",
+        "immunizations",
+        "appointments",
+        "inventory",
+        "reports"
+    ];
+
+
+    pages.forEach(function(item) {
+
+        const element =
+            document.getElementById(
+                "rhu-" + item
+            );
+
+        if (element) {
+            element.classList.add("hidden");
+        }
+
+    });
+
+
+    const selected =
+        document.getElementById(
+            "rhu-" + page
+        );
+
+
+    if (selected) {
+        selected.classList.remove("hidden");
+    }
+
+
+    document
+        .querySelectorAll("#rhuSystem .nav-btn")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+
+    if (page === "dashboard") {
+        refreshRHUDashboard();
+    }
+
+    if (page === "patients") {
+        renderRHUPatients();
+    }
+
+    if (page === "immunizations") {
+        prepareImmunizationForm();
+        renderRHUImmunizations();
+    }
+
+    if (page === "appointments") {
+        prepareAppointmentForm();
+        renderRHUAppointments();
+    }
+
+    if (page === "inventory") {
+        renderInventory();
+    }
+
+    if (page === "reports") {
+        renderReports();
+    }
+
+}
+
+
+/* =====================================================
+   RHU DASHBOARD
+===================================================== */
+
+function refreshRHUDashboard() {
+
+    const users = getUsers();
+
+    const inventory = getInventory();
+
+    const appointments = getAppointments();
+
+
+    const lowStock =
+        inventory.filter(function(item) {
+
+            return item.quantity <= item.lowStock;
+
+        });
+
+
+    document.getElementById("rhuPatientCount")
+        .textContent = users.length;
+
+    document.getElementById("rhuVaccineCount")
+        .textContent = inventory.length;
+
+    document.getElementById("rhuLowStock")
+        .textContent = lowStock.length;
+
+    document.getElementById("rhuAppointmentCount")
+        .textContent = appointments.length;
+
+
+    renderRHUAlerts();
+
+    renderDashboardInventoryAlerts();
+
+}
+
+
+/* =====================================================
+   RHU ALERTS
+===================================================== */
+
+function renderRHUAlerts() {
+
+    const inventory = getInventory();
+
+    const alerts = [];
+
+
+    inventory.forEach(function(item) {
+
+        if (item.quantity <= item.lowStock) {
+
+            alerts.push(
+                "Low stock: " +
+                item.name +
+                " (" +
+                item.quantity +
+                " remaining)"
+            );
+
+        }
+
+
+        const today =
+            new Date();
+
+
+        const expiration =
+            new Date(item.expiration);
+
+
+        const difference =
+            expiration - today;
+
+
+        const days =
+            Math.ceil(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        if (days <= 30 && days >= 0) {
+
+            alerts.push(
+                "Expiring soon: " +
+                item.name +
+                " on " +
+                item.expiration
+            );
+
+        }
+
+
+        if (days < 0) {
+
+            alerts.push(
+                "Expired vaccine: " +
+                item.name +
+                " (" +
+                item.expiration +
+                ")"
+            );
+
+        }
+
+    });
+
+
+    const container =
+        document.getElementById("rhuAlerts");
+
+
+    if (alerts.length === 0) {
+
+        container.innerHTML =
+            '<div class="alert alert-success">No inventory alerts.</div>';
+
+        return;
+    }
+
+
+    container.innerHTML =
+        alerts.map(function(alert) {
+
+            return (
+                '<div class="alert alert-warning">' +
+                escapeHTML(alert) +
+                "</div>"
+            );
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   DASHBOARD INVENTORY ALERTS
+===================================================== */
+
+function renderDashboardInventoryAlerts() {
+
+    const inventory = getInventory();
+
+
+    const alerts =
+        inventory.filter(function(item) {
+
+            return item.quantity <= item.lowStock;
+
+        });
+
+
+    const container =
+        document.getElementById(
+            "dashboardInventoryAlerts"
+        );
+
+
+    if (alerts.length === 0) {
+
+        container.innerHTML =
+            "No low-stock vaccines.";
+
+        return;
+    }
+
+
+    container.innerHTML =
+        alerts.map(function(item) {
+
+            return `
+                <div class="alert alert-warning">
+                    ${escapeHTML(item.name)}
+                    -
+                    ${escapeHTML(String(item.quantity))}
+                    units remaining.
+                </div>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   RHU PATIENTS
+===================================================== */
+
+function renderRHUPatients() {
+
+    const users = getUsers();
+
+    const table =
+        document.getElementById(
+            "rhuPatientTable"
+        );
+
+
+    if (users.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="6">No registered patients.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        users.map(function(patient) {
+
+            return `
+                <tr>
+                    <td>${escapeHTML(patient.id)}</td>
+                    <td>${escapeHTML(patient.name)}</td>
+                    <td>${escapeHTML(patient.birthdate)}</td>
+                    <td>${escapeHTML(patient.barangay)}</td>
+                    <td>${escapeHTML(patient.contact)}</td>
+                    <td>
+                        <button
+                            class="btn btn-small"
+                            onclick="viewPatientDetails('${patient.id}')">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   PATIENT DETAILS
+===================================================== */
+
+function viewPatientDetails(patientId) {
+
+    const users = getUsers();
+
+    const patient =
+        users.find(function(user) {
+
+            return user.id === patientId;
+
+        });
+
+
+    if (!patient) return;
+
+
+    const records =
+        getImmunizations()
+            .filter(function(record) {
+
+                return record.patientId === patient.id;
+
+            });
+
+
+    const appointments =
+        getAppointments()
+            .filter(function(item) {
+
+                return item.patientId === patient.id;
+
+            });
+
+
+    const content =
+        document.getElementById(
+            "patientDetailsContent"
+        );
+
+
+    let recordsHTML =
+        "<h3>Immunization Records</h3>";
+
+
+    if (records.length === 0) {
+
+        recordsHTML +=
+            "<p>No immunization records.</p>";
+
+    } else {
+
+        recordsHTML += `
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vaccine</th>
+                            <th>Dose</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${records.map(function(record) {
+                            return `
+                                <tr>
+                                    <td>${escapeHTML(record.vaccine)}</td>
+                                    <td>${escapeHTML(record.dose)}</td>
+                                    <td>${escapeHTML(record.date)}</td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+    }
+
+
+    let appointmentsHTML =
+        "<h3>Appointments</h3>";
+
+
+    if (appointments.length === 0) {
+
+        appointmentsHTML +=
+            "<p>No appointments.</p>";
+
+    } else {
+
+        appointmentsHTML += `
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${appointments.map(function(item) {
+                            return `
+                                <tr>
+                                    <td>${escapeHTML(item.date)}</td>
+                                    <td>${escapeHTML(item.time)}</td>
+                                    <td>${escapeHTML(item.purpose)}</td>
+                                    <td>${escapeHTML(item.status)}</td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+    }
+
+
+    content.innerHTML = `
+
+        <p>
+            <strong>Patient ID:</strong>
+            ${escapeHTML(patient.id)}
+        </p>
+
+        <p>
+            <strong>Name:</strong>
+            ${escapeHTML(patient.name)}
+        </p>
+
+        <p>
+            <strong>Birth Date:</strong>
+            ${escapeHTML(patient.birthdate)}
+        </p>
+
+        <p>
+            <strong>Contact:</strong>
+            ${escapeHTML(patient.contact)}
+        </p>
+
+        <p>
+            <strong>Barangay:</strong>
+            ${escapeHTML(patient.barangay)}
+        </p>
+
+        <hr>
+
+        ${recordsHTML}
+
+        <br>
+
+        ${appointmentsHTML}
+
+    `;
+
+
+    document
+        .getElementById("patientDetailsModal")
+        .classList.remove("hidden");
+
+}
+
+
+function closePatientDetails() {
+
+    document
+        .getElementById("patientDetailsModal")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   IMMUNIZATION FORM
+===================================================== */
+
+function prepareImmunizationForm() {
+
+    const select =
+        document.getElementById(
+            "immunizationPatient"
+        );
+
+
+    const users = getUsers();
+
+
+    select.innerHTML =
+        '<option value="">Select Patient</option>' +
+
+        users.map(function(patient) {
+
+            return `
+                <option value="${patient.id}">
+                    ${escapeHTML(patient.name)}
+                </option>
+            `;
+
+        }).join("");
+
+
+    const vaccineSelect =
+        document.getElementById(
+            "immunizationVaccine"
+        );
+
+
+    vaccineSelect.innerHTML =
+        '<option value="">Select Vaccine</option>' +
+
+        vaccineInformation.map(function(vaccine) {
+
+            return `
+                <option value="${escapeHTML(vaccine.name)}">
+                    ${escapeHTML(vaccine.name)}
+                </option>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   ADD IMMUNIZATION
+===================================================== */
+
+function addImmunization() {
+
+    const patientId =
+        document.getElementById(
+            "immunizationPatient"
+        ).value;
+
+    const vaccine =
+        document.getElementById(
+            "immunizationVaccine"
+        ).value;
+
+    const dose =
+        document.getElementById(
+            "immunizationDose"
+        ).value.trim();
+
+    const date =
+        document.getElementById(
+            "immunizationDate"
+        ).value;
+
+    const notes =
+        document.getElementById(
+            "immunizationNotes"
+        ).value.trim();
+
+
+    if (
+        !patientId ||
+        !vaccine ||
+        !dose ||
+        !date
+    ) {
+
+        alert(
+            "Please complete the immunization information."
+        );
+
+        return;
+    }
+
+
+    const records = getImmunizations();
+
+
+    records.push({
+
+        id: Date.now(),
+
+        patientId: patientId,
+
+        vaccine: vaccine,
+
+        dose: dose,
+
+        date: date,
+
+        notes: notes,
+
+        rhu: "Rural Health Unit"
+
+    });
+
+
+    saveImmunizations(records);
+
+
+    alert(
+        "Immunization record saved."
+    );
+
+
+    document.getElementById(
+        "immunizationDose"
+    ).value = "";
+
+    document.getElementById(
+        "immunizationDate"
+    ).value = "";
+
+    document.getElementById(
+        "immunizationNotes"
+    ).value = "";
+
+
+    renderRHUImmunizations();
+
+}
+
+
+/* =====================================================
+   RHU IMMUNIZATION TABLE
+===================================================== */
+
+function renderRHUImmunizations() {
+
+    const records =
+        getImmunizations();
+
+
+    const users =
+        getUsers();
+
+
+    const table =
+        document.getElementById(
+            "rhuImmunizationTable"
+        );
+
+
+    if (records.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="5">No immunization records.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        records.map(function(record) {
+
+            const patient =
+                users.find(function(user) {
+
+                    return user.id === record.patientId;
+
+                });
+
+
+            return `
+                <tr>
+                    <td>
+                        ${patient
+                            ? escapeHTML(patient.name)
+                            : "Unknown"}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.vaccine)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.dose)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.date)}
+                    </td>
+
+                    <td>
+                        Rural Health Unit
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   APPOINTMENT FORM
+===================================================== */
+
+function prepareAppointmentForm() {
+
+    const select =
+        document.getElementById(
+            "appointmentPatient"
+        );
+
+
+    const users =
+        getUsers();
+
+
+    select.innerHTML =
+        '<option value="">Select Patient</option>' +
+
+        users.map(function(patient) {
+
+            return `
+                <option value="${patient.id}">
+                    ${escapeHTML(patient.name)}
+                </option>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   ADD APPOINTMENT
+===================================================== */
+
+function addAppointment() {
+
+    const patientId =
+        document.getElementById(
+            "appointmentPatient"
+        ).value;
+
+    const date =
+        document.getElementById(
+            "appointmentDate"
+        ).value;
+
+    const time =
+        document.getElementById(
+            "appointmentTime"
+        ).value;
+
+    const purpose =
+        document.getElementById(
+            "appointmentPurpose"
+        ).value.trim();
+
+
+    if (
+        !patientId ||
+        !date ||
+        !time ||
+        !purpose
+    ) {
+
+        alert(
+            "Please complete the appointment information."
+        );
+
+        return;
+    }
+
+
+    const appointments =
+        getAppointments();
+
+
+    appointments.push({
+
+        id: Date.now(),
+
+        patientId: patientId,
+
+        date: date,
+
+        time: time,
+
+        purpose: purpose,
+
+        status: "Scheduled"
+
+    });
+
+
+    saveAppointments(appointments);
+
+
+    alert(
+        "Appointment saved."
+    );
+
+
+    document.getElementById(
+        "appointmentDate"
+    ).value = "";
+
+    document.getElementById(
+        "appointmentTime"
+    ).value = "";
+
+    document.getElementById(
+        "appointmentPurpose"
+    ).value = "";
+
+
+    renderRHUAppointments();
+
+}
+
+
+/* =====================================================
+   RHU APPOINTMENTS
+===================================================== */
+
+function renderRHUAppointments() {
+
+    const appointments =
+        getAppointments();
+
+
+    const users =
+        getUsers();
+
+
+    const table =
+        document.getElementById(
+            "rhuAppointmentTable"
+        );
+
+
+    if (appointments.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="5">No appointments.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        appointments.map(function(item) {
+
+            const patient =
+                users.find(function(user) {
+
+                    return user.id === item.patientId;
+
+                });
+
+
+            return `
+                <tr>
+                    <td>
+                        ${patient
+                            ? escapeHTML(patient.name)
+                            : "Unknown"}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.date)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.time)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.purpose)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.status)}
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   ADD INVENTORY
+===================================================== */
+
+function addInventory() {
+
+    const name =
+        document.getElementById(
+            "inventoryName"
+        ).value.trim();
+
+    const batch =
+        document.getElementById(
+            "inventoryBatch"
+        ).value.trim();
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "inventoryQuantity"
+            ).value
+        );
+
+    const lowStock =
+        Number(
+            document.getElementById(
+                "inventoryLowStock"
+            ).value
+        );
+
+    const expiration =
+        document.getElementById(
+            "inventoryExpiration"
+        ).value;
+
+
+    if (
+        !name ||
+        !batch ||
+        isNaN(quantity) ||
+        isNaN(lowStock) ||
+        !expiration
+    ) {
+
+        alert(
+            "Please complete the inventory information."
+        );
+
+        return;
+    }
+
+
+    const inventory =
+        getInventory();
+
+
+    inventory.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        batch: batch,
+
+        quantity: quantity,
+
+        lowStock: lowStock,
+
+        expiration: expiration
+
+    });
+
+
+    saveInventory(inventory);
+
+
+    alert(
+        "Inventory added."
+    );
+
+
+    document.getElementById(
+        "inventoryName"
+    ).value = "";
+
+    document.getElementById(
+        "inventoryBatch"
+    ).value = "";
+
+    document.getElementById(
+        "inventoryQuantity"
+    ).value = "";
+
+    document.getElementById(
+        "inventoryLowStock"
+    ).value = "10";
+
+    document.getElementById(
+        "inventoryExpiration"
+    ).value = "";
+
+
+    renderInventory();
+
+}
+
+
+/* =====================================================
+   INVENTORY TABLE
+===================================================== */
+
+function renderInventory() {
+
+    const inventory =
+        getInventory();
+
+
+    const table =
+        document.getElementById(
+            "inventoryTable"
+        );
+
+
+    if (inventory.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="6">No inventory records.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        inventory.map(function(item) {
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+
+            let status = "Normal";
+
+
+            if (item.quantity <= item.lowStock) {
+
+                status = "Low Stock";
+
+            }
+
+
+            if (item.expiration < today) {
+
+                status = "Expired";
+
+            }
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(item.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.batch)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(String(item.quantity))}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(String(item.lowStock))}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(item.expiration)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(status)}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   REPORTS
+===================================================== */
+
+function renderReports() {
+
+    const users =
+        getUsers();
+
+    const immunizations =
+        getImmunizations();
+
+    const appointments =
+        getAppointments();
+
+    const inventory =
+        getInventory();
+
+
+    const totalInventoryUnits =
+        inventory.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(item.quantity);
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "reportPatients"
+    ).textContent = users.length;
+
+
+    document.getElementById(
+        "reportImmunizations"
+    ).textContent = immunizations.length;
+
+
+    document.getElementById(
+        "reportAppointments"
+    ).textContent = appointments.length;
+
+
+    document.getElementById(
+        "reportInventoryUnits"
+    ).textContent = totalInventoryUnits;
+
+
+    const vaccineCounts = {};
+
+
+    immunizations.forEach(function(record) {
+
+        if (!vaccineCounts[record.vaccine]) {
+
+            vaccineCounts[record.vaccine] = 0;
+
+        }
+
+        vaccineCounts[record.vaccine]++;
+
+    });
+
+
+    const table =
+        document.getElementById(
+            "immunizationReportTable"
+        );
+
+
+    const vaccineNames =
+        Object.keys(vaccineCounts);
+
+
+    if (vaccineNames.length === 0) {
+
+        table.innerHTML =
+            '<tr><td colspan="2">No immunization data.</td></tr>';
+
+        return;
+    }
+
+
+    table.innerHTML =
+        vaccineNames.map(function(vaccine) {
+
+            return `
+                <tr>
+                    <td>
+                        ${escapeHTML(vaccine)}
+                    </td>
+
+                    <td>
+                        ${vaccineCounts[vaccine]}
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+initializeData();
+
+
+/* =====================================================
+   AUTO LOGIN AFTER PAGE REFRESH
+===================================================== */
+
+const savedUser =
+    localStorage.getItem(
+        STORAGE_KEYS.currentUser
+    );
+
+
+if (savedUser) {
+
+    const currentUser =
+        JSON.parse(savedUser);
+
+
+    if (currentUser.type === "rhu") {
+
+        showRHU();
+
+    } else {
+
+        const patient =
+            getCurrentPatient();
+
+        if (patient) {
+
+            showPatient(patient);
+
+        } else {
+
+            logout();
+
+        }
+
+    }
+
+}
+
+</script>
 
 </body>
-
 </html>
