@@ -1,85 +1,65 @@
+```css
 /* =====================================================
-   GENERAL
+   VAXBALANCE - RESPONSIVE CSS
 ===================================================== */
 
 * {
     box-sizing: border-box;
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
 
 body {
-
-    margin: 0;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-
     background: #eeeeee;
-
     color: #222222;
-
 }
-
 
 .hidden {
-
     display: none !important;
-
 }
 
+
+/* =====================================================
+   GENERAL ELEMENTS
+===================================================== */
 
 button {
-
-    padding: 7px 12px;
-
-    border: 1px solid #777777;
-
-    background: #dddddd;
-
-    color: #111111;
-
+    padding: 9px 12px;
+    border: 1px solid #777;
+    background: #ddd;
+    color: #111;
     cursor: pointer;
-
     font-family: Arial, Helvetica, sans-serif;
-
+    border-radius: 3px;
 }
-
 
 button:hover {
-
-    background: #cccccc;
-
+    background: #ccc;
 }
-
 
 input,
 select {
-
-    padding: 7px;
-
-    border: 1px solid #888888;
-
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #888;
     background: white;
-
     font-family: Arial, Helvetica, sans-serif;
-
+    border-radius: 3px;
 }
-
 
 label {
-
     display: block;
-
     margin-top: 10px;
-
     margin-bottom: 4px;
-
 }
-
 
 
 /* =====================================================
@@ -87,75 +67,50 @@ label {
 ===================================================== */
 
 .login-page {
-
     width: 100%;
-
     min-height: 100vh;
+    min-height: 100dvh;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
+    padding: 20px;
     background: #eeeeee;
-
 }
-
 
 .login-box {
-
-    width: 380px;
+    width: 100%;
+    max-width: 380px;
 
     background: white;
-
-    border: 1px solid #888888;
+    border: 1px solid #888;
 
     padding: 25px;
-
 }
-
 
 .login-box h1 {
-
     margin-top: 0;
-
     margin-bottom: 5px;
-
 }
-
 
 .login-box p {
-
-    color: #555555;
-
+    color: #555;
 }
-
 
 .login-box input {
-
     width: 100%;
-
 }
-
 
 .login-box button {
-
-    margin-top: 15px;
-
     width: 100%;
-
+    margin-top: 12px;
 }
-
 
 .login-note {
-
     text-align: center;
-
     font-size: 12px;
-
 }
-
 
 
 /* =====================================================
@@ -163,48 +118,39 @@ label {
 ===================================================== */
 
 .top-bar {
+    min-height: 55px;
 
-    height: 55px;
-
-    background: #333333;
-
+    background: #333;
     color: white;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
-    padding: 0 20px;
+    padding: 10px 15px;
 
+    gap: 10px;
 }
 
+.system-title {
+    min-width: 0;
+}
 
 .system-title strong {
-
     font-size: 18px;
-
 }
-
 
 .system-title span {
-
-    margin-left: 15px;
-
+    margin-left: 10px;
     font-size: 13px;
-
 }
-
 
 .logout-button {
-
-    background: #eeeeee;
-
-    color: #222222;
-
+    width: auto;
+    flex-shrink: 0;
+    background: #eee;
+    color: #222;
 }
-
 
 
 /* =====================================================
@@ -212,14 +158,10 @@ label {
 ===================================================== */
 
 .main-container {
-
     display: flex;
-
-    min-height:
-        calc(100vh - 55px);
-
+    width: 100%;
+    min-height: calc(100vh - 55px);
 }
-
 
 
 /* =====================================================
@@ -227,40 +169,24 @@ label {
 ===================================================== */
 
 .sidebar {
-
     width: 210px;
+    flex-shrink: 0;
 
-    background: #dddddd;
-
-    border-right:
-        1px solid #999999;
+    background: #ddd;
+    border-right: 1px solid #999;
 
     padding: 10px;
-
 }
 
-
 .sidebar button {
-
     width: 100%;
-
     display: block;
 
     margin-bottom: 5px;
-
     text-align: left;
 
-    background: #eeeeee;
-
+    background: #eee;
 }
-
-
-.sidebar button:hover {
-
-    background: #cccccc;
-
-}
-
 
 
 /* =====================================================
@@ -268,34 +194,28 @@ label {
 ===================================================== */
 
 .content {
-
     flex: 1;
+    min-width: 0;
 
     padding: 20px;
 
-    overflow-x: auto;
-
+    overflow-x: hidden;
 }
 
+.page {
+    width: 100%;
+}
 
 .page h2 {
-
     margin-top: 0;
 
-    border-bottom:
-        1px solid #999999;
-
+    border-bottom: 1px solid #999;
     padding-bottom: 8px;
-
 }
-
 
 .page h3 {
-
     margin-top: 25px;
-
 }
-
 
 
 /* =====================================================
@@ -303,100 +223,89 @@ label {
 ===================================================== */
 
 .summary-grid {
-
     display: grid;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 10px;
 
     margin-bottom: 20px;
-
 }
 
-
 .summary-box {
-
     background: white;
 
-    border:
-        1px solid #999999;
+    border: 1px solid #999;
 
     padding: 15px;
 
+    min-width: 0;
 }
-
 
 .summary-box h3 {
-
-    margin:
-        0 0 10px 0;
+    margin: 0 0 10px 0;
 
     font-size: 14px;
-
 }
 
-
 .summary-box p {
-
     font-size: 22px;
 
     margin: 0;
 
+    overflow-wrap: anywhere;
 }
-
 
 .alert-box {
-
     background: #fff4d6;
-
 }
-
 
 
 /* =====================================================
-   TABLES
+   TABLE WRAPPER BEHAVIOR
 ===================================================== */
 
+/*
+   Since the existing HTML doesn't have table wrappers,
+   tables themselves are allowed to scroll horizontally.
+*/
+
 table {
-
     width: 100%;
-
-    border-collapse:
-        collapse;
-
+    border-collapse: collapse;
     background: white;
 
+    min-width: 650px;
 }
 
+table {
+    display: block;
+    overflow-x: auto;
+}
+
+thead,
+tbody {
+    width: 100%;
+}
 
 th,
 td {
-
-    border:
-        1px solid #999999;
+    border: 1px solid #999;
 
     padding: 8px;
 
     text-align: left;
 
+    white-space: nowrap;
 }
-
 
 th {
-
-    background: #dddddd;
-
+    background: #ddd;
 }
-
 
 tr:nth-child(even) {
-
     background: #f7f7f7;
-
 }
-
 
 
 /* =====================================================
@@ -404,52 +313,36 @@ tr:nth-child(even) {
 ===================================================== */
 
 .alert-list {
-
     background: white;
 
-    border:
-        1px solid #999999;
+    border: 1px solid #999;
 
+    width: 100%;
 }
-
 
 .alert-item {
-
     padding: 10px;
 
-    border-bottom:
-        1px solid #cccccc;
+    border-bottom: 1px solid #ccc;
 
+    overflow-wrap: anywhere;
 }
-
 
 .alert-item:last-child {
-
     border-bottom: none;
-
 }
-
 
 .alert-warning {
-
     background: #fff4d6;
-
 }
-
 
 .alert-danger {
-
     background: #ffdede;
-
 }
-
 
 .alert-normal {
-
-    background: #eeeeee;
-
+    background: #eee;
 }
-
 
 
 /* =====================================================
@@ -457,18 +350,16 @@ tr:nth-child(even) {
 ===================================================== */
 
 .report-box {
-
     background: white;
 
-    border:
-        1px solid #999999;
+    border: 1px solid #999;
 
     padding: 15px;
 
     margin-bottom: 15px;
 
+    width: 100%;
 }
-
 
 
 /* =====================================================
@@ -476,80 +367,272 @@ tr:nth-child(even) {
 ===================================================== */
 
 .modal {
-
     position: fixed;
 
     top: 0;
-
     left: 0;
 
     width: 100%;
-
     height: 100%;
+    height: 100dvh;
 
-    background:
-        rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.4);
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
+    padding: 15px;
+
+    z-index: 999;
 }
 
-
 .modal-content {
-
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 
     max-height: 90vh;
+    max-height: 90dvh;
 
     overflow-y: auto;
 
     background: white;
 
-    border:
-        1px solid #555555;
+    border: 1px solid #555;
 
     padding: 20px;
-
 }
-
 
 .modal-content input {
-
     width: 100%;
-
 }
-
 
 .modal-content button {
-
     margin-top: 15px;
-
 }
-
 
 
 /* =====================================================
-   MOBILE / SMALL SCREEN
+   TABLET
 ===================================================== */
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 
     .summary-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
-
-    .sidebar {
-
-        width: 170px;
-
+        grid-template-columns: repeat(2, 1fr);
     }
 
 }
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+
+    /* ---------------------------------------------
+       TOP BAR
+    --------------------------------------------- */
+
+    .top-bar {
+        min-height: 55px;
+
+        padding: 10px;
+
+        gap: 8px;
+    }
+
+    .system-title strong {
+        font-size: 16px;
+    }
+
+    .system-title span {
+        display: block;
+
+        margin-left: 0;
+        margin-top: 2px;
+
+        font-size: 11px;
+    }
+
+    .logout-button {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+
+    /* ---------------------------------------------
+       SIDEBAR
+    --------------------------------------------- */
+
+    .main-container {
+        display: block;
+        min-height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+
+        border-right: none;
+        border-bottom: 1px solid #999;
+
+        padding: 7px;
+
+        overflow-x: auto;
+
+        white-space: nowrap;
+    }
+
+    .sidebar > div {
+        display: flex;
+
+        gap: 5px;
+
+        overflow-x: auto;
+    }
+
+    .sidebar button {
+        display: inline-block;
+
+        width: auto;
+
+        flex: 0 0 auto;
+
+        margin-bottom: 0;
+
+        padding: 8px 10px;
+
+        font-size: 12px;
+
+        text-align: center;
+    }
+
+
+    /* ---------------------------------------------
+       CONTENT
+    --------------------------------------------- */
+
+    .content {
+        width: 100%;
+
+        padding: 12px;
+
+        overflow-x: hidden;
+    }
+
+    .page h2 {
+        font-size: 20px;
+    }
+
+
+    /* ---------------------------------------------
+       SUMMARY
+    --------------------------------------------- */
+
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px;
+    }
+
+    .summary-box {
+        padding: 11px;
+    }
+
+    .summary-box h3 {
+        font-size: 12px;
+    }
+
+    .summary-box p {
+        font-size: 19px;
+    }
+
+
+    /* ---------------------------------------------
+       TABLES
+    --------------------------------------------- */
+
+    table {
+        width: 100%;
+
+        min-width: 650px;
+
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 7px;
+    }
+
+
+    /* ---------------------------------------------
+       BUTTONS
+    --------------------------------------------- */
+
+    .content > button {
+        width: 100%;
+
+        margin-bottom: 5px;
+    }
+
+
+    /* ---------------------------------------------
+       MODALS
+    --------------------------------------------- */
+
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-content {
+        width: 100%;
+
+        max-height: 90dvh;
+
+        padding: 15px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .content {
+        padding: 10px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-box p {
+        font-size: 18px;
+    }
+
+    .sidebar button {
+        font-size: 11px;
+        padding: 7px 8px;
+    }
+
+    .login-page {
+        padding: 12px;
+    }
+
+    .login-box {
+        padding: 18px;
+    }
+
+}
+```
