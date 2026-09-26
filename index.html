@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VaxBalance</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         LOGIN PAGE
+    ====================================================== -->
+
+    <div id="loginPage" class="login-page">
+
+        <div class="login-box">
+
+            <h1>VaxBalance</h1>
+
+            <p>
+                Vaccine Inventory and Patient Immunization Management
+            </p>
+
+            <hr>
+
+
+            <h3>Login</h3>
+
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+            >
+
+
+            <button onclick="login()">
+                Login
+            </button>
+
+
+            <hr>
+
+
+            <p>
+                New patient?
+            </p>
+
+
+            <button onclick="openRegistrationForm()">
+                Register as Patient
+            </button>
+
+
+            <p class="login-note">
+                RHU personnel use their assigned account.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MAIN APPLICATION
+    ====================================================== -->
+
+    <div id="appPage" class="app-page hidden">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="top-bar">
+
+            <div class="system-title">
+
+                <strong>VaxBalance</strong>
+
+                <span id="userRoleText"></span>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </header>
+
+
+
+        <div class="main-container">
+
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================== -->
+
+            <aside class="sidebar">
+
+
+                <!-- PATIENT MENU -->
+
+                <div id="patientMenu">
+
+                    <button
+                        onclick="showPage('patientDashboard')"
+                    >
+                        Dashboard
+                    </button>
+
+
+                    <button
+                        onclick="showPage('immunization')"
+                    >
+                        Immunization Records
+                    </button>
+
+
+                    <button
+                        onclick="showPage('schedule')"
+                    >
+                        Vaccination Schedule
+                    </button>
+
+
+                    <button
+                        onclick="showPage('appointments')"
+                    >
+                        Appointments
+                    </button>
+
+
+                    <button
+                        onclick="showPage('vaccineInfo')"
+                    >
+                        Vaccine Information
+                    </button>
+
+                </div>
+
+
+
+                <!-- RHU MENU -->
+
+                <div id="rhuMenu">
+
+                    <button
+                        onclick="showPage('rhuDashboard')"
+                    >
+                        Dashboard
+                    </button>
+
+
+                    <button
+                        onclick="showPage('inventory')"
+                    >
+                        Vaccine Inventory
+                    </button>
+
+
+                    <button
+                        onclick="showPage('patients')"
+                    >
+                        Patient Records
+                    </button>
+
+
+                    <button
+                        onclick="showPage('rhuAppointments')"
+                    >
+                        Appointments
+                    </button>
+
+
+                    <button
+                        onclick="showPage('reports')"
+                    >
+                        Reports
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+
+            <!-- =================================================
+                 MAIN CONTENT
+            ================================================== -->
+
+            <main class="content">
+
+
+
+                <!-- =================================================
+                     PATIENT DASHBOARD
+                ================================================== -->
+
+                <section
+                    id="patientDashboard"
+                    class="page"
+                >
+
+                    <h2>Patient Dashboard</h2>
+
+
+                    <p>
+                        Welcome to VaxBalance.
+                    </p>
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-box">
+
+                            <h3>Next Vaccination</h3>
+
+                            <p id="nextVaccination">
+                                No upcoming vaccination
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Appointments</h3>
+
+                            <p id="patientAppointmentCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Completed Vaccines</h3>
+
+                            <p id="completedVaccineCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box alert-box">
+
+                            <h3>Overdue</h3>
+
+                            <p id="overdueCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <h3>Alerts</h3>
+
+
+                    <div
+                        id="patientAlerts"
+                        class="alert-list"
+                    >
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     IMMUNIZATION RECORDS
+                ================================================== -->
+
+                <section
+                    id="immunization"
+                    class="page hidden"
+                >
+
+                    <h2>Immunization Records</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Dose</th>
+
+                                <th>Date Given</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="immunizationTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     VACCINATION SCHEDULE
+                ================================================== -->
+
+                <section
+                    id="schedule"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccination Schedule</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Dose</th>
+
+                                <th>Scheduled Date</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="scheduleTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PATIENT APPOINTMENTS
+                ================================================== -->
+
+                <section
+                    id="appointments"
+                    class="page hidden"
+                >
+
+                    <h2>My Appointments</h2>
+
+
+                    <button
+                        onclick="openAppointmentForm()"
+                    >
+                        Add Appointment
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Purpose</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="appointmentTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     VACCINE INFORMATION
+                ================================================== -->
+
+                <section
+                    id="vaccineInfo"
+                    class="page hidden"
+                >
+
+                    <h2>Basic Vaccine Information</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Purpose</th>
+
+                                <th>Recommended Doses</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>BCG</td>
+
+                                <td>
+                                    Protection against tuberculosis
+                                </td>
+
+                                <td>1</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Hepatitis B</td>
+
+                                <td>
+                                    Protection against Hepatitis B
+                                </td>
+
+                                <td>3</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>Polio</td>
+
+                                <td>
+                                    Protection against poliovirus
+                                </td>
+
+                                <td>Multiple</td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>MMR</td>
+
+                                <td>
+                                    Protection against measles,
+                                    mumps and rubella
+                                </td>
+
+                                <td>2</td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RHU DASHBOARD
+                ================================================== -->
+
+                <section
+                    id="rhuDashboard"
+                    class="page hidden"
+                >
+
+                    <h2>RHU Dashboard</h2>
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-box">
+
+                            <h3>Total Patients</h3>
+
+                            <p id="totalPatients">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Total Vaccine Stock</h3>
+
+                            <p id="totalStock">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box">
+
+                            <h3>Low Stock Items</h3>
+
+                            <p id="lowStockCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="summary-box alert-box">
+
+                            <h3>Expiring Soon</h3>
+
+                            <p id="expiringCount">
+                                0
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <h3>System Alerts</h3>
+
+
+                    <div
+                        id="rhuAlerts"
+                        class="alert-list"
+                    >
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     INVENTORY
+                ================================================== -->
+
+                <section
+                    id="inventory"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccine Inventory</h2>
+
+
+                    <button
+                        onclick="openInventoryForm()"
+                    >
+                        Add Vaccine
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Vaccine</th>
+
+                                <th>Batch Number</th>
+
+                                <th>Quantity</th>
+
+                                <th>Expiration Date</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="inventoryTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PATIENT RECORDS
+                ================================================== -->
+
+                <section
+                    id="patients"
+                    class="page hidden"
+                >
+
+                    <h2>Patient Records</h2>
+
+
+                    <button
+                        onclick="openPatientForm()"
+                    >
+                        Add Patient
+                    </button>
+
+
+                    <br>
+                    <br>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Name</th>
+
+                                <th>Age</th>
+
+                                <th>Contact</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="patientTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RHU APPOINTMENTS
+                ================================================== -->
+
+                <section
+                    id="rhuAppointments"
+                    class="page hidden"
+                >
+
+                    <h2>Vaccination Appointments</h2>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Patient</th>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Purpose</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="rhuAppointmentTable">
+                        </tbody>
+
+                    </table>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     REPORTS
+                ================================================== -->
+
+                <section
+                    id="reports"
+                    class="page hidden"
+                >
+
+                    <h2>Basic Reports</h2>
+
+
+
+                    <div class="report-box">
+
+                        <h3>Inventory Summary</h3>
+
+
+                        <p>
+
+                            Total vaccine stock:
+
+                            <strong id="reportTotalStock">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Low-stock vaccines:
+
+                            <strong id="reportLowStock">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Expiring vaccines:
+
+                            <strong id="reportExpiring">
+                                0
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="report-box">
+
+                        <h3>Patient Summary</h3>
+
+
+                        <p>
+
+                            Registered patients:
+
+                            <strong id="reportPatients">
+                                0
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Scheduled appointments:
+
+                            <strong id="reportAppointments">
+                                0
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+
+                </section>
+
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PATIENT REGISTRATION MODAL
+    ====================================================== -->
+
+    <div
+        id="registrationModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Patient Registration</h2>
+
+
+            <p>
+                Enter your information to create a patient account.
+            </p>
+
+
+            <label>Patient ID</label>
+
+            <input
+                type="text"
+                id="registerPatientId"
+                placeholder="Example: P004"
+            >
+
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="registerPatientName"
+                placeholder="Enter full name"
+            >
+
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                id="registerPatientAge"
+                placeholder="Enter age"
+            >
+
+
+            <label>Contact Number</label>
+
+            <input
+                type="text"
+                id="registerPatientContact"
+                placeholder="Enter contact number"
+            >
+
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Create username"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Create password"
+            >
+
+
+            <br>
+
+
+            <button
+                onclick="registerPatient()"
+            >
+                Register
+            </button>
+
+
+            <button
+                onclick="closeModal('registrationModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         APPOINTMENT FORM
+    ====================================================== -->
+
+    <div
+        id="appointmentModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Appointment</h2>
+
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                id="appointmentDate"
+            >
+
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                id="appointmentTime"
+            >
+
+
+            <label>Purpose</label>
+
+            <input
+                type="text"
+                id="appointmentPurpose"
+            >
+
+
+            <button
+                onclick="saveAppointment()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('appointmentModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INVENTORY FORM
+    ====================================================== -->
+
+    <div
+        id="inventoryModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Vaccine</h2>
+
+
+            <label>Vaccine Name</label>
+
+            <input
+                type="text"
+                id="vaccineName"
+            >
+
+
+            <label>Batch Number</label>
+
+            <input
+                type="text"
+                id="batchNumber"
+            >
+
+
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                id="vaccineQuantity"
+            >
+
+
+            <label>Expiration Date</label>
+
+            <input
+                type="date"
+                id="expirationDate"
+            >
+
+
+            <button
+                onclick="saveInventory()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('inventoryModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RHU PATIENT FORM
+    ====================================================== -->
+
+    <div
+        id="patientModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <h2>Add Patient</h2>
+
+
+            <label>Patient ID</label>
+
+            <input
+                type="text"
+                id="patientId"
+            >
+
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                id="patientName"
+            >
+
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                id="patientAge"
+            >
+
+
+            <label>Contact</label>
+
+            <input
+                type="text"
+                id="patientContact"
+            >
+
+
+            <button
+                onclick="savePatient()"
+            >
+                Save
+            </button>
+
+
+            <button
+                onclick="closeModal('patientModal')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
